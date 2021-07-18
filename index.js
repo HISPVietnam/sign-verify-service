@@ -4,8 +4,8 @@ const { authenticate } = require("./security");
 
 async function createServer(host, port) {
   const server = new Hapi.server({
-    port: 3000,
-    host: "localhost",
+    port,
+    host,
     query: {
       parser: (query) => Qs.parse(query),
     },
@@ -54,7 +54,7 @@ async function createServer(host, port) {
 }
 
 (async () => {
-  const server = await createServer();
+  const server = await createServer("localhost", 3000);
   await server.start();
 
   server.log("Server running on %s", server.info.uri);
