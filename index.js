@@ -1,22 +1,11 @@
-const fs = require("fs");
-const path = require("path");
 const Hapi = require("@hapi/hapi");
 const Qs = require("qs");
 const { authenticate } = require("./security");
-const multistream = require("pino-multi-stream").multistream;
 const yargs = require("yargs/yargs");
 const { hideBin } = require("yargs/helpers");
+const { createLogger } = require("./logger");
 
-const logger = require("pino")(
-  {
-    name: "svq",
-    level: "info",
-  },
-  multistream([
-    { stream: process.stdout, prettyPrint: false },
-    { stream: fs.createWriteStream(path.resolve("svq.log"), { flags: "a" }) },
-  ])
-);
+const logger = createLogger();
 
 async function createServer(host, port) {
   const server = new Hapi.server({
