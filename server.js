@@ -54,4 +54,21 @@ const createServer = async (host, port, logger) => {
   return server;
 };
 
-module.exports = { createServer };
+const startServer = async ({ port, host, logger }) => {
+  const server = await createServer(host, port, logger);
+  await server.start();
+
+  server.log("Server running on %s", server.info.uri);
+
+  process.on("unhandledRejection", (err) => {
+    server.log(err);
+    process.exit(1);
+  });
+
+  process.on("SIGINT", async () => {
+    await server.stop({ timeout: 10000 });
+    process.exit(0);
+  });
+};
+
+module.exports = { createServer, startServer };
