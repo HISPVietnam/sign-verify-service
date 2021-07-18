@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "build": "caxa --input . --output svs -- '{{caxa}}/node_modules/.bin/node' '{{caxa}}/index.js'"
+    "build": "caxa --input . --output svs -- '{{caxa}}/node_modules/.bin/node' '{{caxa}}/index.js'",
+    "docker": "docker build . -t sgs"
   },
   "repository": {
     "type": "git",
