@@ -4,15 +4,17 @@ const Hapi = require("@hapi/hapi");
 const Qs = require("qs");
 const { authenticate } = require("./security");
 const multistream = require("pino-multi-stream").multistream;
+const yargs = require("yargs/yargs");
+const { hideBin } = require("yargs/helpers");
 
 const logger = require("pino")(
   {
-    name: "signed-qrcode-service",
+    name: "svq",
     level: "info",
   },
   multistream([
     { stream: process.stdout, prettyPrint: false },
-    { stream: fs.createWriteStream(path.resolve("signed-qrcode-service.log"), { flags: "a" }) },
+    { stream: fs.createWriteStream(path.resolve("svq.log"), { flags: "a" }) },
   ])
 );
 
@@ -57,19 +59,19 @@ async function createServer(host, port) {
     },
   });
 
-  await server.register(require("./routes/cose-sign-api-router"), {
+  await server.register(require("./routes/sign-api-router"), {
     routes: { prefix: "/certificate/sign" },
   });
 
-  await server.register(require("./routes/cose-verify-api-router"), {
+  await server.register(require("./routes/verify-api-router"), {
     routes: { prefix: "/certificate/verify" },
   });
 
   return server;
 }
 
-(async () => {
-  const server = await createServer("localhost", 3000);
+const startServer = async (host, port) => {
+  const server = await createServer(host, port);
   await server.start();
 
   server.log("Server running on %s", server.info.uri);
@@ -83,4 +85,22 @@ async function createServer(host, port) {
     await server.stop({ timeout: 10000 });
     process.exit(0);
   });
-})();
+};
+
+const args = yargs(hideBin(process.argv))
+  .usage("Sign-Verify-QRCode \n\nUsage: $0 [options]")
+  .options({
+    host: {
+      desc: "Hostname",
+      type: "string",
+      default: "localhost",
+    },
+    port: {
+      desc: "Port number",
+      type: "number",
+      default: 3000,
+    },
+  })
+  .parse();
+
+startServer(args.host, args.port);
