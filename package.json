@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HISPVietnam/signed-qrcode-service.git"
+    "url": "git+https://github.com/HISPVietnam/sign-verify-service.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/HISPVietnam/signed-qrcode-service/issues"
+    "url": "https://github.com/HISPVietnam/sign-verify-service/issues"
   },
-  "homepage": "https://github.com/HISPVietnam/signed-qrcode-service#readme",
+  "homepage": "https://github.com/HISPVietnam/sign-verify-service#readme",
   "dependencies": {
     "@hapi/basic": "^6.0.0",
     "@hapi/bell": "^12.2.0",
