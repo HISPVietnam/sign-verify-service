@@ -1,6 +1,6 @@
 const Hapi = require("@hapi/hapi");
-const { req } = require("pino-std-serializers");
 const QRCode = require("qrcode");
+const { coseSign } = require("../security");
 
 const internals = {};
 
@@ -22,8 +22,10 @@ exports.plugin = {
  * @returns
  */
 internals.handler = async (request, h) => {
-  const image = await QRCode.toBuffer(JSON.stringify(request.payload), {
-    scale: 10,
+  const buf = await coseSign(JSON.stringify(request.payload));
+
+  const image = await QRCode.toBuffer(buf.toString("hex"), {
+    scale: 4,
     type: "png",
     margin: 2,
   });
