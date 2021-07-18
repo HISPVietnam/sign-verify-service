@@ -19,4 +19,4 @@ const args = yargs(hideBin(process.argv))
   })
   .parse();
 
-startServer({ host: args.host, port: args.port, logger: createLogger() });
+startServer({ host: args.host, port: args.port, logger: createLogger({ name: "svs" }) });
