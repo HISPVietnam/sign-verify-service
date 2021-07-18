@@ -1,11 +1,11 @@
 {
-  "name": "svq",
+  "name": "svs",
   "version": "1.0.0",
-  "description": "Sign, Verify QRCode",
+  "description": "Sign-Verify-Service",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "build": "caxa --input . --output svq -- '{{caxa}}/node_modules/.bin/node' '{{caxa}}/index.js'"
+    "build": "caxa --input . --output svs -- '{{caxa}}/node_modules/.bin/node' '{{caxa}}/index.js'"
   },
   "repository": {
     "type": "git",

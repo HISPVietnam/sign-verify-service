@@ -77,7 +77,7 @@ const startServer = async (host, port) => {
 };
 
 const args = yargs(hideBin(process.argv))
-  .usage("Sign-Verify-QRCode \n\nUsage: $0 [options]")
+  .usage("Sign-Verify-Service \n\nUsage: $0 [options]")
   .options({
     host: {
       desc: "Hostname",
