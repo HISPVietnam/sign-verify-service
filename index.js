@@ -1,8 +1,8 @@
 const Hapi = require("@hapi/hapi");
 const Qs = require("qs");
-const { authenticate } = require("./security");
 const yargs = require("yargs/yargs");
 const { hideBin } = require("yargs/helpers");
+const { authenticate } = require("./security");
 const { createLogger } = require("./logger");
 
 const logger = createLogger();
