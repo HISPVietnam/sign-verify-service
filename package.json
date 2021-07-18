@@ -1,0 +1,47 @@
+{
+  "name": "signed-qrcode-service",
+  "version": "1.0.0",
+  "description": "Signed QRCode service (COSE)",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HISPVietnam/signed-qrcode-service.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HISPVietnam/signed-qrcode-service/issues"
+  },
+  "homepage": "https://github.com/HISPVietnam/signed-qrcode-service#readme",
+  "dependencies": {
+    "@hapi/basic": "^6.0.0",
+    "@hapi/bell": "^12.2.0",
+    "@hapi/boom": "^9.1.3",
+    "@hapi/hapi": "^20.1.5",
+    "@hapi/inert": "^6.0.3",
+    "@hapi/vision": "^6.1.0",
+    "bcrypt": "^5.0.1",
+    "ejs": "^3.1.6",
+    "hapi-pino": "^8.3.0",
+    "joi": "^17.4.1",
+    "pino": "^6.12.0",
+    "qrcode": "^1.4.4",
+    "qs": "^6.10.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@hapi/code": "^8.0.3",
+    "@hapi/lab": "^24.3.2",
+    "nodemon": "^2.0.12",
+    "pino-pretty": "^5.1.1",
+    "pm2": "^5.1.0",
+    "prettier": "^2.3.2"
+  },
+  "prettier": {
+    "printWidth": 120
+  }
+}
