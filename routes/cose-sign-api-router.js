@@ -24,6 +24,8 @@ exports.plugin = {
 internals.handler = async (request, h) => {
   const buf = await coseSign(JSON.stringify(request.payload));
 
+  console.log(buf.toString("hex"));
+
   const image = await QRCode.toBuffer(buf.toString("hex"), {
     scale: 4,
     type: "png",

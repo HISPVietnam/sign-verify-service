@@ -31,6 +31,17 @@ const coseSign = async (payload) => {
   return cose.sign.create(headers, payload, signer);
 };
 
-const coseVerify = (payload) => {};
+const coseVerify = (payload) => {
+  const verifier = {
+    key: {
+      x: Buffer.from("143329cce7868e416927599cf65a34f3ce2ffda55a7eca69ed8919a394d42f0f", "hex"),
+      y: Buffer.from("60f7f1a780d8a783bfb7a2dd6b2796e8128dbbcef9d3d168db9529971a36e7b9", "hex"),
+    },
+  };
+
+  const COSEMessage = Buffer.from(payload, "hex");
+
+  return cose.sign.verify(COSEMessage, verifier);
+};
 
 module.exports = { hashPassword, authenticate, coseSign, coseVerify };

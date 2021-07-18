@@ -1,4 +1,5 @@
 const Hapi = require("@hapi/hapi");
+const { coseVerify } = require("../security");
 
 const internals = {};
 
@@ -14,8 +15,22 @@ exports.plugin = {
   },
 };
 
+/**
+ * @param {Hapi.Request} request
+ * @param {Hapi.ResponseToolkit} h
+ * @returns
+ */
 internals.handler = async (request, h) => {
-  return {
-    status: "OK",
-  };
+  try {
+    const buf = await coseVerify(request.payload);
+
+    return {
+      status: "OK",
+      data: JSON.parse(buf.toString("utf-8")),
+    };
+  } catch (err) {
+    return {
+      status: "ERROR",
+    };
+  }
 };
