@@ -1,4 +1,6 @@
 const Hapi = require("@hapi/hapi");
+const { req } = require("pino-std-serializers");
+const QRCode = require("qrcode");
 
 const internals = {};
 
@@ -14,8 +16,20 @@ exports.plugin = {
   },
 };
 
+/**
+ * @param {Hapi.Request} request
+ * @param {Hapi.ResponseToolkit} h
+ * @returns
+ */
 internals.handler = async (request, h) => {
-  return {
-    status: "OK",
-  };
+  const image = await QRCode.toBuffer(JSON.stringify(request.payload), {
+    scale: 10,
+    type: "png",
+    margin: 2,
+  });
+
+  const response = h.response(image);
+  response.type("image/png");
+
+  return response;
 };
