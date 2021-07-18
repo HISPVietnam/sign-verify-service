@@ -11,6 +11,12 @@ exports.plugin = {
     server.route({
       method: "POST",
       path: "/",
+      options: {
+        auth: {
+          strategies: ["basic"],
+          mode: "required",
+        },
+      },
       handler: internals.handler,
     });
   },
