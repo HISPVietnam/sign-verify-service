@@ -1,6 +1,20 @@
+const fs = require("fs");
+const path = require("path");
 const Hapi = require("@hapi/hapi");
 const Qs = require("qs");
 const { authenticate } = require("./security");
+const multistream = require("pino-multi-stream").multistream;
+
+const logger = require("pino")(
+  {
+    name: "signed-qrcode-service",
+    level: "info",
+  },
+  multistream([
+    { stream: process.stdout, prettyPrint: false },
+    { stream: fs.createWriteStream(path.resolve("signed-qrcode-service.log"), { flags: "a" }) },
+  ])
+);
 
 async function createServer(host, port) {
   const server = new Hapi.server({
@@ -19,6 +33,7 @@ async function createServer(host, port) {
     // pino for logging (use pino-pretty for colored output)
     plugin: require("hapi-pino"),
     options: {
+      instance: logger,
       redact: ["req.headers.authorization"],
     },
   });

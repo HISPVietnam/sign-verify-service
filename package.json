@@ -4,7 +4,8 @@
   "description": "Signed QRCode service (COSE)",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "build": "caxa --input . --output signed-qrcode-service -- '{{caxa}}/node_modules/.bin/node' '{{caxa}}/index.js'"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "hapi-pino": "^8.3.0",
     "joi": "^17.4.1",
     "pino": "^6.12.0",
+    "pino-multi-stream": "^5.3.0",
     "qrcode": "^1.4.4",
     "qs": "^6.10.1",
     "uuid": "^8.3.2"
@@ -37,6 +39,7 @@
   "devDependencies": {
     "@hapi/code": "^8.0.3",
     "@hapi/lab": "^24.3.2",
+    "caxa": "^2.1.0",
     "nodemon": "^2.0.12",
     "pino-pretty": "^5.1.1",
     "pm2": "^5.1.0",
