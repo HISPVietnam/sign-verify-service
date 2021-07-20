@@ -1,4 +1,4 @@
-# signed-qrcode-service
+# sign-verify-service
 
 Small service for signing JSON payloads and returning QRCode.
 
