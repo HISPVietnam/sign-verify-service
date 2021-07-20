@@ -2,15 +2,14 @@ const fs = require("fs");
 const path = require("path");
 const multistream = require("pino-multi-stream").multistream;
 
-const createLogger = ({ name, prettyPrint = true }) => {
+const createLogger = ({ name }) => {
   return require("pino")(
     {
       name,
       level: "info",
-      prettyPrint,
     },
     multistream([
-      { stream: process.stdout, prettyPrint: false },
+      { stream: process.stdout },
       { stream: fs.createWriteStream(path.resolve(`${name}.log`), { flags: "a" }) },
     ])
   );

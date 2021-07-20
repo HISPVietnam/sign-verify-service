@@ -58,7 +58,7 @@ const startServer = async ({ port, host, logger }) => {
   const server = await createServer(host, port, logger);
   await server.start();
 
-  server.log("Server running on %s", server.info.uri);
+  server.log(`Server running on ${server.info.uri}`);
 
   process.on("unhandledRejection", (err) => {
     server.log(err);
