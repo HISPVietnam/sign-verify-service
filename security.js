@@ -16,7 +16,7 @@ const authenticate = (request, username, password) => {
   };
 };
 
-const coseSign = async (payload) => {
+const coseSign = async (data) => {
   const headers = {
     p: { alg: "ES256" },
     u: { kid: "11" },
@@ -28,10 +28,10 @@ const coseSign = async (payload) => {
     },
   };
 
-  return cose.sign.create(headers, payload, signer);
+  return cose.sign.create(headers, data, signer);
 };
 
-const coseVerify = (payload) => {
+const coseVerify = (data) => {
   const verifier = {
     key: {
       x: Buffer.from("143329cce7868e416927599cf65a34f3ce2ffda55a7eca69ed8919a394d42f0f", "hex"),
@@ -39,7 +39,7 @@ const coseVerify = (payload) => {
     },
   };
 
-  const COSEMessage = Buffer.from(payload, "hex");
+  const COSEMessage = Buffer.from(data, "hex");
 
   return cose.sign.verify(COSEMessage, verifier);
 };
