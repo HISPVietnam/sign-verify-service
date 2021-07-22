@@ -53,11 +53,12 @@ const createServer = async (host, port, security, logger) => {
   return server;
 };
 
-const startServer = async ({ port, host, security, logger }) => {
+const startServer = async ({ port, host, security, schemaValidator, logger }) => {
   const server = await createServer(host, port, security, logger);
 
   server.method("sign", security.sign);
   server.method("verify", security.verify);
+  server.method("validator", schemaValidator);
 
   await server.start();
 

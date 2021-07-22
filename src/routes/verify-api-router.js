@@ -26,14 +26,24 @@ exports.plugin = {
  * @returns
  */
 internals.handler = async (request, h) => {
-  const { verify } = request.server.methods;
+  const { verify, validator } = request.server.methods;
 
   try {
-    const buf = await verify(request.payload);
+    const buffer = await verify(request.payload);
+    const data = JSON.parse(buffer.toString("utf-8"));
+
+    const isValid = validator(data);
+
+    if (!isValid) {
+      return {
+        status: "ERROR",
+        data: validator.errors,
+      };
+    }
 
     return {
       status: "VERIFIED",
-      data: JSON.parse(buf.toString("utf-8")),
+      data,
     };
   } catch (err) {
     return {

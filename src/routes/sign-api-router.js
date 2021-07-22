@@ -27,10 +27,20 @@ exports.plugin = {
  * @returns
  */
 internals.handler = async (request, h) => {
-  const { sign } = request.server.methods;
-  const buf = await sign(JSON.stringify(request.payload));
+  const { sign, validator } = request.server.methods;
 
-  const image = await QRCode.toBuffer(buf.toString("hex"), {
+  const isValid = validator(request.payload);
+
+  if (!isValid) {
+    return {
+      status: "ERROR",
+      data: validator.errors,
+    };
+  }
+
+  const buffer = await sign(JSON.stringify(request.payload));
+
+  const image = await QRCode.toBuffer(buffer.toString("hex"), {
     scale: 4,
     type: "image/png",
     margin: 3,

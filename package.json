@@ -29,6 +29,7 @@
     "@hapi/inert": "^6.0.3",
     "@hapi/vision": "^6.1.0",
     "ajv": "^8.6.2",
+    "ajv-formats": "^2.1.0",
     "base45": "^3.0.0",
     "bcrypt": "^5.0.1",
     "cose-js": "^0.6.0",

@@ -3,6 +3,7 @@ const { hideBin } = require("yargs/helpers");
 const { createLogger } = require("./logger");
 const { startServer } = require("./server");
 const createSecurity = require("./security");
+const createSchemaValidator = require("./schema");
 
 require("dotenv").config();
 
@@ -12,17 +13,25 @@ const args = yargs(hideBin(process.argv))
     host: {
       desc: "Hostname",
       type: "string",
+      require: true,
       default: process.env["HOST"] || "localhost",
     },
     port: {
       desc: "Port number",
       type: "number",
+      require: true,
       default: process.env["PORT"] || 3000,
     },
     certificate: {
       desc: "X.509 Certificate",
       type: "string",
+      require: true,
       default: process.env["CERTIFICATE"],
+    },
+    schema: {
+      desc: "JSON Schema for payload validation",
+      type: "string",
+      default: process.env["SCHEMA"],
     },
     "private-key": {
       desc: "Private Key",
@@ -46,5 +55,6 @@ startServer({
   host: args.host,
   port: args.port,
   security: createSecurity(args.username, args.password, args.certificate, args.privateKey),
+  schemaValidator: createSchemaValidator(args.schema),
   logger: createLogger({ name: "svs" }),
 });
