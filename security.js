@@ -11,13 +11,12 @@ const hashPassword = (pw) => {
   return Bcrypt.hashSync(pw, Bcrypt.genSaltSync(10));
 };
 
-const authenticate = (request, username, password) => {
-  // for now we just check that username==password
-  const userPassword = hashPassword(username);
+const authenticate = (localUsername, localPassword, request, username, password) => {
+  const valid = localUsername == username && Bcrypt.compareSync(password, localPassword);
 
   return {
-    isValid: Bcrypt.compareSync(password, userPassword),
-    valid: Bcrypt.compareSync(password, userPassword),
+    isValid: valid,
+    valid,
     credentials: { username, password },
   };
 };
@@ -75,17 +74,18 @@ const createFingerprint = (certificate) => {
   return new Uint8Array(hash).slice(0, 8);
 };
 
-const createSecurity = (certificateFile, privateKeyFile) => {
+const createSecurity = (localUsername, localPassword, certificateFile, privateKeyFile) => {
   const certificate = Certificate.fromPEM(fs.readFileSync(certificateFile));
   const privateKey = PrivateKey.fromPEM(fs.readFileSync(privateKeyFile));
 
   return {
     hashPassword,
-    authenticate,
+    authenticate: (request, username, password) =>
+      authenticate(localUsername, hashPassword(localPassword), request, username, password),
     sign: (data) => coseSign(data, certificate, privateKey),
     verify: (data) => coseVerify(data, certificate),
     fingerprint: () => createFingerprint(certificate),
   };
 };
 
-module.exports = { createSecurity, hashPassword, authenticate, coseSign, coseVerify };
+module.exports = createSecurity;
