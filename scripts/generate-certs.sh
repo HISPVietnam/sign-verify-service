@@ -4,6 +4,15 @@
 #
 set -e
 
+# If you are on Mac, you might want to use brew to install openssl and use
+# OPENSSL=/usr/local/Cellar/openssl\@1.1/1.1.1k/bin/openssl
+# The included LibreSSL seems to have some issues generating these certs
+
+# https://jmrtd.org/certificates.shtml
+# CSCA = Country Signing Certificate Authority
+# CSC = Country Signing Certificate
+# DSC = Document Signing Certificate
+
 OPENSSL=${OPENSSL:=openssl}
 
 ${OPENSSL} ecparam -name prime256v1 -genkey -noout -out csca.key
