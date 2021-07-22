@@ -30,8 +30,6 @@ internals.handler = async (request, h) => {
   const { sign } = request.server.methods;
   const buf = await sign(JSON.stringify(request.payload));
 
-  console.log(buf.toString("hex"));
-
   const image = await QRCode.toBuffer(buf.toString("hex"), {
     scale: 4,
     type: "png",
