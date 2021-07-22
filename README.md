@@ -23,6 +23,10 @@ SCHEMA=./schemas/status.json
 
 ## Links
 
+- https://github.com/erdtman/cose-js
+- https://github.com/ehn-dcc-development/ehn-sign-verify-javascript-trivial
+- https://github.com/ehn-dcc-development/ehn-dcc-schema
+- https://github.com/ehn-dcc-development/ehn-dcc-schema/blob/release/1.3.0/examples/vaccination/simple.json
 - https://github.com/ehn-dcc-development/hcert-spec
 - https://github.com/ehn-dcc-development/hcert-spec/blob/main/README.md
 - https://github.com/ehn-dcc-development/hcert-spec/blob/main/hcert_spec.md
