@@ -11,7 +11,7 @@ const defaultSchema = {
 
 const createSchemaValidator = (schema = defaultSchema) => {
   if (typeof schema === "string") {
-    schema = fs.readFileSync(schema, { encoding: "utf-8" });
+    schema = JSON.parse(fs.readFileSync(schema, { encoding: "utf-8" }));
   }
 
   const ajv = new Ajv({
