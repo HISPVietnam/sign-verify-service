@@ -1,7 +1,8 @@
 FROM node:14
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+COPY .env ./
+RUN npm ci
 COPY . .
-EXPOSE 3000
-CMD [ "node", "src/index.js" ]
+EXPOSE 8080
+CMD [ "node", "src/index.js", "--host", "0.0.0.0","--port", "3000" ]
