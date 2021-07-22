@@ -1,6 +1,5 @@
 const Hapi = require("@hapi/hapi");
 const QRCode = require("qrcode");
-const { coseSign } = require("../security");
 
 const internals = {};
 
@@ -28,7 +27,8 @@ exports.plugin = {
  * @returns
  */
 internals.handler = async (request, h) => {
-  const buf = await coseSign(JSON.stringify(request.payload));
+  const { sign } = request.server.methods;
+  const buf = await sign(JSON.stringify(request.payload));
 
   console.log(buf.toString("hex"));
 

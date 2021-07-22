@@ -1,8 +1,7 @@
 const Hapi = require("@hapi/hapi");
 const Qs = require("qs");
-const { authenticate } = require("./security");
 
-const createServer = async (host, port, logger) => {
+const createServer = async (host, port, security, logger) => {
   const server = new Hapi.server({
     port,
     host,
@@ -24,7 +23,7 @@ const createServer = async (host, port, logger) => {
     },
   });
 
-  server.auth.strategy("basic", "basic", { validate: authenticate });
+  server.auth.strategy("basic", "basic", { validate: security.authenticate });
 
   server.views({
     engines: {
@@ -54,8 +53,12 @@ const createServer = async (host, port, logger) => {
   return server;
 };
 
-const startServer = async ({ port, host, logger }) => {
-  const server = await createServer(host, port, logger);
+const startServer = async ({ port, host, security, logger }) => {
+  const server = await createServer(host, port, security, logger);
+
+  server.method("sign", security.sign);
+  server.method("verify", security.verify);
+
   await server.start();
 
   server.log(`Server running on ${server.info.uri}`);

@@ -106,3 +106,5 @@ dist
 # Custom
 /svs
 /svs.*
+/certs
+/.env
