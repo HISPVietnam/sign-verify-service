@@ -5,7 +5,7 @@ const cbor = require("cbor");
 const zlib = require("zlib");
 const createHash = require("crypto").createHash;
 const { Certificate, PrivateKey } = require("@fidm/x509");
-const base45 = require("base45-js");
+const base45 = require("base45");
 
 const hashPassword = (pw) => {
   return Bcrypt.hashSync(pw, Bcrypt.genSaltSync(10));
