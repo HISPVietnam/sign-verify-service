@@ -15,7 +15,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/HISPVietnam/sign-verify-service/issues"
   },
@@ -47,6 +47,7 @@
   "devDependencies": {
     "@hapi/code": "^8.0.3",
     "@hapi/lab": "^24.3.2",
+    "ajv-cli": "^5.0.0",
     "caxa": "^2.1.0",
     "nodemon": "^2.0.12",
     "pino-pretty": "^5.1.2",
