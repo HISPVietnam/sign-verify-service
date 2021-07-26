@@ -4,7 +4,7 @@
   "description": "Sign-Verify-Service",
   "main": "lib/index.js",
   "scripts": {
-    "start": "nodemon lib/index.js",
+    "start": "nodemon -w lib -w .env lib/index.js",
     "caxa:build": "caxa --input . --output svs -- '{{caxa}}/node_modules/.bin/node' '{{caxa}}/lib/index.js'",
     "docker:build": "docker build . -t sgs",
     "docker:run": "docker run --name sgs -it -p 3000:3000 --rm sgs"
