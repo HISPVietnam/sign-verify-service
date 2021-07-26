@@ -18,8 +18,17 @@ CERTIFICATE=./certs/dsc-worker.pem
 PRIVATE_KEY=./certs/dsc-worker.p8
 USERNAME=0D5587BF-F12B-4BC9-9D3D-B2C3D607BD6F
 PASSWORD=51CB6AA3-0EBE-4DD5-B6DC-3E9FFA3E86EB
-SCHEMA=./schemas/status.json
+# SCHEMA=./schemas/status.json
+SCHEMA=../ehn-dcc-schema/DCC.combined-schema.json
+DISABLE_SIGNING=1
 ```
+
+## Enable and disable sign/verify endpoints
+
+If you want to start up a service that either just signs or verifies you can use the keys
+
+`DISABLE_SIGNING=1` to disable support for signing
+`DISABLE_VERIFICATION=1` to disable support for verification
 
 ## Links
 
