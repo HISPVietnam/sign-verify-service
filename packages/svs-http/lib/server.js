@@ -88,8 +88,14 @@ const createServer = async (cfg, security, logger) => {
 const startServer = async ({ cfg, security, schemaValidator, logger }) => {
   const server = await createServer(cfg, security, logger);
 
-  server.method("signature", security.signature);
-  server.method("verification", security.verification);
+  if (cfg.verification.enabled) {
+    server.method("verification", security.verification);
+  }
+
+  if (cfg.signature.enabled) {
+    server.method("signature", security.signature);
+  }
+
   server.method("validator", schemaValidator);
 
   await server.start();

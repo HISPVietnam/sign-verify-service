@@ -57,7 +57,7 @@ const parse = (cfg) => {
     cfg.keys.public = loadFile(cfg.keys.public);
   }
 
-  if (cfg.keys.private) {
+  if (cfg.signature.enabled && cfg.keys.private) {
     cfg.keys.private = loadFile(cfg.keys.private);
   }
 
