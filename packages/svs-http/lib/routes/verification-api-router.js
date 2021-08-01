@@ -31,7 +31,8 @@ const Hapi = require("@hapi/hapi");
 const internals = {};
 
 exports.plugin = {
-  name: "cose-verify-api-router",
+  name: "verification-api-router",
+  desc: "API to verify digital signatures",
   version: "1.0.0",
   register: async (/** @type Hapi.Server */ server, options) => {
     server.route({

@@ -32,7 +32,8 @@ const QRCode = require("qrcode");
 const internals = {};
 
 exports.plugin = {
-  name: "cose-sign-api-router",
+  name: "signature-api-router",
+  desc: "API to digitally sign payloads",
   version: "1.0.0",
   register: async (/** @type Hapi.Server */ server, options) => {
     server.route({
