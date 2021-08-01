@@ -1,4 +1,4 @@
-# sign-verify-service
+# signature-verification-service
 
 Small service for signing JSON payloads and returning QRCode.
 
@@ -22,7 +22,9 @@ keys:
   public: ./certs/dsc-worker.pem
   private: ./certs/dsc-worker.p8
 schema: ./schemas/status.json
-verify:
+signature:
+  path: /api/sign
+verification:
   enabled: false
 ```
 
@@ -30,8 +32,8 @@ verify:
 
 If you want to start up a service that either just signs or verifies you can use the keys
 
-`sign.enabled: false` to disable support for signing
-`verify.enabled: false` to disable support for verification
+`signature.enabled: false` to disable support for signing
+`verification.enabled: false` to disable support for verification
 
 ## Links
 

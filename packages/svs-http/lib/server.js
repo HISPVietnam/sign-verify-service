@@ -70,15 +70,15 @@ const createServer = async (cfg, security, logger) => {
     },
   });
 
-  if (cfg.sign.enabled) {
-    await server.register(require("./routes/sign-api-router"), {
-      routes: { prefix: cfg.sign.path },
+  if (cfg.signature.enabled) {
+    await server.register(require("./routes/signature-api-router"), {
+      routes: { prefix: cfg.signature.path },
     });
   }
 
-  if (cfg.verify.enabled) {
-    await server.register(require("./routes/verify-api-router"), {
-      routes: { prefix: cfg.verify.path },
+  if (cfg.verification.enabled) {
+    await server.register(require("./routes/verification-api-router"), {
+      routes: { prefix: cfg.verification.path },
     });
   }
 
@@ -88,8 +88,8 @@ const createServer = async (cfg, security, logger) => {
 const startServer = async ({ cfg, security, schemaValidator, logger }) => {
   const server = await createServer(cfg, security, logger);
 
-  server.method("sign", security.sign);
-  server.method("verify", security.verify);
+  server.method("signature", security.signature);
+  server.method("verification", security.verification);
   server.method("validator", schemaValidator);
 
   await server.start();

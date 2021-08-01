@@ -27,12 +27,11 @@
  */
 
 const Hapi = require("@hapi/hapi");
-const QRCode = require("qrcode");
 
 const internals = {};
 
 exports.plugin = {
-  name: "cose-sign-api-router",
+  name: "cose-verify-api-router",
   version: "1.0.0",
   register: async (/** @type Hapi.Server */ server, options) => {
     server.route({
@@ -55,28 +54,28 @@ exports.plugin = {
  * @returns
  */
 internals.handler = async (request, h) => {
-  const { sign, validator } = request.server.methods;
+  const { verification, validator } = request.server.methods;
 
-  const isValid = validator(request.payload);
+  try {
+    const buffer = await verification(request.payload);
+    const data = JSON.parse(buffer.toString("utf-8"));
 
-  if (!isValid) {
+    const isValid = validator(data);
+
+    if (!isValid) {
+      return {
+        status: "ERROR",
+        data: validator.errors,
+      };
+    }
+
+    return {
+      status: "VERIFIED",
+      data,
+    };
+  } catch (err) {
     return {
       status: "ERROR",
-      data: validator.errors,
     };
   }
-
-  const buffer = await sign(JSON.stringify(request.payload));
-
-  const image = await QRCode.toBuffer(buffer.toString("hex"), {
-    scale: 4,
-    type: "image/png",
-    margin: 3,
-    errorCorrectionLevel: "quartile",
-  });
-
-  const response = h.response(image);
-  response.type("image/png");
-
-  return response;
 };

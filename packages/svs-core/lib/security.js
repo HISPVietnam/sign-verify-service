@@ -48,7 +48,7 @@ const authenticate = (localUsername, localPassword, request, username, password)
   };
 };
 
-const coseSign = async (data, publicKey, privateKey) => {
+const coseSignature = async (data, publicKey, privateKey) => {
   const headers = {
     p: { alg: "ES256", kid: createFingerprint(publicKey) },
     u: {},
@@ -72,7 +72,7 @@ const coseSign = async (data, publicKey, privateKey) => {
   });
 };
 
-const coseVerify = (data, publicKey) => {
+const coseVerification = (data, publicKey) => {
   if (data.startsWith("HC1")) {
     data = data.substring(3);
     if (data.startsWith(":")) {
@@ -111,13 +111,13 @@ const createSecurity = (cfg) => {
       authenticate(cfg.http.auth.username, hashPassword(cfg.http.auth.password), request, username, password),
   };
 
-  if (cfg.verify.enabled) {
-    o.verify = (data) => coseVerify(data, publicKey);
+  if (cfg.verification.enabled) {
+    o.verification = (data) => coseVerification(data, publicKey);
     o.fingerprint = () => createFingerprint(publicKey);
   }
 
-  if (cfg.sign.enabled) {
-    o.sign = (data) => coseSign(data, publicKey, privateKey);
+  if (cfg.signature.enabled) {
+    o.signature = (data) => coseSignature(data, publicKey, privateKey);
   }
 
   return o;
