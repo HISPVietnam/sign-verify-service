@@ -37,5 +37,5 @@ startServer({
   cfg,
   security: createSecurity(cfg),
   schemaValidator: createSchemaValidator(cfg.schema),
-  logger: createLogger({ name: "svs-http" }),
+  logger: createLogger({ name: "svs" }),
 });
