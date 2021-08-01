@@ -38,8 +38,15 @@ const hashPassword = (pw) => {
   return Bcrypt.hashSync(pw, Bcrypt.genSaltSync(10));
 };
 
-const authenticate = (localUsername, localPassword, request, username, password) => {
-  const valid = localUsername == username && Bcrypt.compareSync(password, localPassword);
+const authenticate = (auths, request, username, password) => {
+  let valid = false;
+
+  for (const auth of auths) {
+    if (auth.username == username && Bcrypt.compareSync(password, auth.password)) {
+      valid = true;
+      break;
+    }
+  }
 
   return {
     isValid: valid,
@@ -105,10 +112,16 @@ const createSecurity = (cfg) => {
   const publicKey = Certificate.fromPEM(cfg.keys.public);
   const privateKey = PrivateKey.fromPEM(cfg.keys.private);
 
+  const auths = cfg.http.auth.map((p) => {
+    return {
+      username: p.username,
+      password: hashPassword(p.password),
+    };
+  });
+
   const o = {
     hashPassword,
-    authenticate: (request, username, password) =>
-      authenticate(cfg.http.auth.username, hashPassword(cfg.http.auth.password), request, username, password),
+    authenticate: (request, username, password) => authenticate(auths, request, username, password),
   };
 
   if (cfg.verification.enabled) {

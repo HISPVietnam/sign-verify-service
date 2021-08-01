@@ -33,10 +33,12 @@ const defaultConfig = {
   http: {
     host: "localhost",
     port: 3000,
-    auth: {
-      username: "admin",
-      password: "admin",
-    },
+    auth: [
+      {
+        username: "admin",
+        password: "admin",
+      },
+    ],
   },
   schema: null,
   keys: { public: null, private: null },
