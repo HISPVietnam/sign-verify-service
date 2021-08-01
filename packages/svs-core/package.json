@@ -1,0 +1,34 @@
+{
+  "name": "@svs/core",
+  "version": "1.0.0",
+  "description": "Sign-Verify-Service",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HISPVietnam/sign-verify-service.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/HISPVietnam/sign-verify-service/issues"
+  },
+  "homepage": "https://github.com/HISPVietnam/sign-verify-service#readme",
+  "dependencies": {
+    "@fidm/x509": "^1.2.1",
+    "ajv": "^8.6.2",
+    "ajv-formats": "^2.1.0",
+    "base45": "^3.0.0",
+    "bcrypt": "^5.0.1",
+    "cose-js": "^0.6.0",
+    "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "caxa": "^2.1.0",
+    "nodemon": "^2.0.12",
+    "pm2": "^5.1.0"
+  },
+  "prettier": {
+    "printWidth": 120
+  }
+}

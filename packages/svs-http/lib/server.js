@@ -28,7 +28,7 @@
 
 const Hapi = require("@hapi/hapi");
 const Qs = require("qs");
-const { enableSigning, enableVerification } = require("./common");
+const { enableSigning, enableVerification } = require("@svs/core/lib/common");
 
 const createServer = async (host, port, security, logger) => {
   const server = new Hapi.server({

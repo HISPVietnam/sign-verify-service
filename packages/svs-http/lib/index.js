@@ -30,11 +30,12 @@ const yargs = require("yargs/yargs");
 const { hideBin } = require("yargs/helpers");
 require("dotenv").config();
 
-const { createLogger } = require("./logger");
+const { createLogger } = require("@svs/core/lib/logger");
+const createSecurity = require("@svs/core/lib/security");
+const createSchemaValidator = require("@svs/core/lib/schema");
+const { enableVerification, enableSigning } = require("@svs/core/lib/common");
+
 const { startServer } = require("./server");
-const createSecurity = require("./security");
-const createSchemaValidator = require("./schema");
-const { enableVerification, enableSigning } = require("./common");
 
 const args = yargs(hideBin(process.argv))
   .usage("Sign-Verify-Service \n\nUsage: $0 [options]")
@@ -86,5 +87,5 @@ startServer({
   port: args.port,
   security: createSecurity(args.username, args.password, args.certificate, args.privateKey),
   schemaValidator: createSchemaValidator(args.schema),
-  logger: createLogger({ name: "svs" }),
+  logger: createLogger({ name: "svs-http" }),
 });
