@@ -8,6 +8,6 @@
     "packages/*"
   ],
   "scripts": {
-    "svs-http:run": "nodemon -w lib -w .env packages/svs-http/lib/index.js"
+    "svs-http:run": "nodemon -w packages/svs-http/lib -w packages/svs-core/lib -w .env packages/svs-http/lib/index.js"
   }
 }
