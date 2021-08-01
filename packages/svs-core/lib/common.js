@@ -57,9 +57,4 @@ const loadFile = (p, opts = {}) => {
   return data;
 };
 
-const enableSigning = () => (process.env["DISABLE_SIGNING"] == 1 ? false : true);
-
-const enableVerification = () =>
-  process.env["DISABLE_VERIFICATION"] == 1 && process.env["DISABLE_SIGNING"] == 1 ? false : true;
-
-module.exports = { loadFile, enableSigning, enableVerification };
+module.exports = { loadFile };

@@ -72,13 +72,13 @@ const createServer = async (cfg, security, logger) => {
 
   if (cfg.sign.enabled) {
     await server.register(require("./routes/sign-api-router"), {
-      routes: { prefix: "/certificate/sign" },
+      routes: { prefix: cfg.sign.path },
     });
   }
 
   if (cfg.verify.enabled) {
     await server.register(require("./routes/verify-api-router"), {
-      routes: { prefix: "/certificate/verify" },
+      routes: { prefix: cfg.verify.path },
     });
   }
 

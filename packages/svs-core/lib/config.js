@@ -40,8 +40,8 @@ const defaultConfig = {
   },
   schema: null,
   keys: { public: null, private: null },
-  sign: { enabled: true },
-  verify: { enabled: true },
+  sign: { enabled: true, path: "/certificate/sign" },
+  verify: { enabled: true, path: "/certificate/verify" },
 };
 
 let config;

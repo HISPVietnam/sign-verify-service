@@ -48,9 +48,9 @@ const authenticate = (localUsername, localPassword, request, username, password)
   };
 };
 
-const coseSign = async (data, certificate, privateKey) => {
+const coseSign = async (data, publicKey, privateKey) => {
   const headers = {
-    p: { alg: "ES256", kid: createFingerprint(certificate) },
+    p: { alg: "ES256", kid: createFingerprint(publicKey) },
     u: {},
   };
 
@@ -72,7 +72,7 @@ const coseSign = async (data, certificate, privateKey) => {
   });
 };
 
-const coseVerify = (data, certificate) => {
+const coseVerify = (data, publicKey) => {
   if (data.startsWith("HC1")) {
     data = data.substring(3);
     if (data.startsWith(":")) {
@@ -87,22 +87,22 @@ const coseVerify = (data, certificate) => {
   data = base45.decode(data);
   data = zlib.inflateSync(data);
 
-  const publicKey = certificate.publicKey.keyRaw;
-  const keyX = Buffer.from(publicKey.slice(1, 1 + 32));
-  const keyY = Buffer.from(publicKey.slice(33, 33 + 32));
+  const publicKeyRaw = publicKey.publicKey.keyRaw;
+  const keyX = Buffer.from(publicKeyRaw.slice(1, 1 + 32));
+  const keyY = Buffer.from(publicKeyRaw.slice(33, 33 + 32));
 
-  const verifier = { key: { x: keyX, y: keyY, kid: createFingerprint(certificate) } };
+  const verifier = { key: { x: keyX, y: keyY, kid: createFingerprint(publicKey) } };
 
   return cose.sign.verify(data, verifier).then((buf) => cbor.decode(buf));
 };
 
-const createFingerprint = (certificate) => {
-  const hash = createHash("sha256").update(certificate.raw).digest();
+const createFingerprint = (publicKey) => {
+  const hash = createHash("sha256").update(publicKey.raw).digest();
   return new Uint8Array(hash).slice(0, 8);
 };
 
 const createSecurity = (cfg) => {
-  const certificate = Certificate.fromPEM(cfg.keys.public);
+  const publicKey = Certificate.fromPEM(cfg.keys.public);
   const privateKey = PrivateKey.fromPEM(cfg.keys.private);
 
   const o = {
@@ -112,12 +112,12 @@ const createSecurity = (cfg) => {
   };
 
   if (cfg.verify.enabled) {
-    o.verify = (data) => coseVerify(data, certificate);
-    o.fingerprint = () => createFingerprint(certificate);
+    o.verify = (data) => coseVerify(data, publicKey);
+    o.fingerprint = () => createFingerprint(publicKey);
   }
 
   if (cfg.sign.enabled) {
-    o.sign = (data) => coseSign(data, certificate, privateKey);
+    o.sign = (data) => coseSign(data, publicKey, privateKey);
   }
 
   return o;
