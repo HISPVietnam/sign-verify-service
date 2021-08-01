@@ -41,10 +41,6 @@ const defaultSchema = {
 };
 
 const createSchemaValidator = (schema = defaultSchema) => {
-  if (typeof schema === "string") {
-    schema = loadFile(schema, { isJson: true });
-  }
-
   const ajv = new Ajv2020({
     allErrors: true,
     useDefaults: true,

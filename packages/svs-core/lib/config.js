@@ -26,40 +26,48 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const path = require("path");
-const fs = require("fs");
-const YAML = require("yaml");
+const { defaultsDeep } = require("lodash");
+const { loadFile } = require("./common");
 
-const loadFile = (p, opts = {}) => {
-  const { encoding, required, isJson, isYaml } = {
-    encoding: "UTF-8",
-    required: true,
-    isJson: false,
-    isYaml: false,
-    ...opts,
-  };
-
-  p = path.resolve(p);
-
-  if (required && !fs.existsSync(p)) {
-    console.error(`File ${p} does not exist`);
-    process.exit(-1);
-  }
-
-  let data = fs.readFileSync(p, { encoding });
-
-  if (isJson) {
-    data = JSON.parse(data);
-  } else if (isYaml) {
-    data = YAML.parse(data);
-  }
-
-  return data;
+const defaultConfig = {
+  http: {
+    host: "localhost",
+    port: 3000,
+    auth: {
+      username: "admin",
+      password: "admin",
+    },
+  },
+  schema: null,
+  keys: { public: null, private: null },
+  sign: { enabled: true },
+  verify: { enabled: true },
 };
 
-const enableSigning = () => (process.env["DISABLE_SIGNING"] == 1 ? false : true);
+let config;
 
-const enableVerification = () =>
-  process.env["DISABLE_VERIFICATION"] == 1 && process.env["DISABLE_SIGNING"] == 1 ? false : true;
+const parse = (cfg) => {
+  if (cfg.schema) {
+    cfg.schema = loadFile(cfg.schema, { isJson: true });
+  }
 
-module.exports = { loadFile, enableSigning, enableVerification };
+  if (cfg.keys.public) {
+    cfg.keys.public = loadFile(cfg.keys.public);
+  }
+
+  if (cfg.keys.private) {
+    cfg.keys.private = loadFile(cfg.keys.private);
+  }
+
+  return cfg;
+};
+
+module.exports = (configFile) => {
+  if (config) {
+    return config;
+  }
+
+  config = parse(defaultsDeep({}, loadFile(configFile, { isYaml: true }), defaultConfig));
+
+  return config;
+};

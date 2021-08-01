@@ -33,7 +33,6 @@ const zlib = require("zlib");
 const createHash = require("crypto").createHash;
 const { Certificate, PrivateKey } = require("@fidm/x509");
 const base45 = require("base45");
-const { loadFile, enableSigning, enableVerification } = require("./common");
 
 const hashPassword = (pw) => {
   return Bcrypt.hashSync(pw, Bcrypt.genSaltSync(10));
@@ -102,25 +101,22 @@ const createFingerprint = (certificate) => {
   return new Uint8Array(hash).slice(0, 8);
 };
 
-const createSecurity = (localUsername, localPassword, certificateFile, privateKeyFile) => {
-  const certificate = Certificate.fromPEM(
-    loadFile(certificateFile, { required: enableVerification() || enableSigning() })
-  );
-
-  const privateKey = PrivateKey.fromPEM(loadFile(privateKeyFile, { required: enableSigning() }));
+const createSecurity = (cfg) => {
+  const certificate = Certificate.fromPEM(cfg.keys.public);
+  const privateKey = PrivateKey.fromPEM(cfg.keys.private);
 
   const o = {
     hashPassword,
     authenticate: (request, username, password) =>
-      authenticate(localUsername, hashPassword(localPassword), request, username, password),
+      authenticate(cfg.http.auth.username, hashPassword(cfg.http.auth.password), request, username, password),
   };
 
-  if (enableVerification) {
+  if (cfg.verify.enabled) {
     o.verify = (data) => coseVerify(data, certificate);
     o.fingerprint = () => createFingerprint(certificate);
   }
 
-  if (enableSigning) {
+  if (cfg.sign.enabled) {
     o.sign = (data) => coseSign(data, certificate, privateKey);
   }
 

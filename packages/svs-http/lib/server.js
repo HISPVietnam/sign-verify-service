@@ -28,12 +28,11 @@
 
 const Hapi = require("@hapi/hapi");
 const Qs = require("qs");
-const { enableSigning, enableVerification } = require("@svs/core/lib/common");
 
-const createServer = async (host, port, security, logger) => {
+const createServer = async (cfg, security, logger) => {
   const server = new Hapi.server({
-    port,
-    host,
+    host: cfg.http.host,
+    port: cfg.http.port,
     query: {
       parser: (query) => Qs.parse(query),
     },
@@ -71,13 +70,13 @@ const createServer = async (host, port, security, logger) => {
     },
   });
 
-  if (enableSigning()) {
+  if (cfg.sign.enabled) {
     await server.register(require("./routes/sign-api-router"), {
       routes: { prefix: "/certificate/sign" },
     });
   }
 
-  if (enableVerification()) {
+  if (cfg.verify.enabled) {
     await server.register(require("./routes/verify-api-router"), {
       routes: { prefix: "/certificate/verify" },
     });
@@ -86,8 +85,8 @@ const createServer = async (host, port, security, logger) => {
   return server;
 };
 
-const startServer = async ({ port, host, security, schemaValidator, logger }) => {
-  const server = await createServer(host, port, security, logger);
+const startServer = async ({ cfg, security, schemaValidator, logger }) => {
+  const server = await createServer(cfg, security, logger);
 
   server.method("sign", security.sign);
   server.method("verify", security.verify);
