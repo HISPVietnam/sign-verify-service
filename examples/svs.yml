@@ -1,0 +1,23 @@
+http:
+  port: 3000
+  host: localhost
+  auth:
+    - username: admin
+      password: admin
+    - username: 0D5587BF-F12B-4BC9-9D3D-B2C3D607BD6F
+      password: 51CB6AA3-0EBE-4DD5-B6DC-3E9FFA3E86EB
+keys:
+  public: ./certs/dsc-worker.pem
+  private: ./certs/dsc-worker.p8
+# schema: ./schemas/status.json
+signature:
+  enabled: true
+verification:
+  enabled: true
+httpClient:
+  enabled: true
+  module: ./svs-dhis2.js
+  baseUrl: https://play.dhis2.org/dev
+  auth:
+    username: admin
+    password: district

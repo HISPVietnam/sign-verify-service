@@ -26,41 +26,14 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const request = require("superagent");
-const { isObject } = require("./common");
+module.exports = async ({ httpRequest, request, cfg, json }) => {
+  const response = await json(`${cfg.baseUrl}/api/dataElements`, {
+    query: {
+      fields: "id",
+    },
+  });
 
-const createHttpClient = (cfg) => {
-  if (!cfg.enabled) {
-    return;
-  }
+  const payload = response.body;
 
-  // TODO add proper error handling, no need to push this down to the client module
-  const getJson = (url, { headers, query }) => {
-    const req = request
-      .get(url)
-      .maxResponseSize(300000000)
-      .retry(10)
-      .set("Accept-Encoding", "gzip, deflate")
-      .set("Accept", "application/json; UTF-8")
-      .set("X-Requested-With", "XMLHttpRequest")
-      .auth(cfg.auth.username, cfg.auth.password);
-
-    if (isObject(headers)) {
-      req.set(headers);
-    }
-
-    if (isObject(query)) {
-      req.query(query);
-    }
-
-    return req;
-  };
-
-  const load = (httpRequest) => {
-    return cfg.module({ httpRequest, request, cfg, json: getJson });
-  };
-
-  return load;
+  return payload;
 };
-
-module.exports = createHttpClient;
