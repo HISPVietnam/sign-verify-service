@@ -31,5 +31,9 @@
   },
   "prettier": {
     "printWidth": 120
-  }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "engineStrict": true
 }
