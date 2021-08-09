@@ -1,5 +1,5 @@
 {
-  "name": "signature-verification-service",
+  "name": "sign-verify-service",
   "version": "1.0.0",
   "private": true,
   "repository": "git@github.com:HISPVietnam/sign-verify-service.git",
