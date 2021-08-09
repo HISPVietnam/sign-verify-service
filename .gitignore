@@ -108,5 +108,6 @@ dist
 /certs
 /svs
 /svs.*
+/svs-*
 /.env
 .DS_Store

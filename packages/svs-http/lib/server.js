@@ -82,10 +82,16 @@ const createServer = async (cfg, security, logger) => {
     });
   }
 
+  if (cfg.httpClient.enabled) {
+    await server.register(require("./routes/http-client-api-router"), {
+      routes: { prefix: cfg.httpClient.path },
+    });
+  }
+
   return server;
 };
 
-const startServer = async ({ cfg, security, schemaValidator, logger }) => {
+const startServer = async ({ cfg, security, schemaValidator, logger, httpClient }) => {
   const server = await createServer(cfg, security, logger);
 
   if (cfg.verification.enabled) {
@@ -94,6 +100,10 @@ const startServer = async ({ cfg, security, schemaValidator, logger }) => {
 
   if (cfg.signature.enabled) {
     server.method("signature", security.signature);
+  }
+
+  if (cfg.httpClient.enabled) {
+    server.method("httpClient", httpClient);
   }
 
   server.method("validator", schemaValidator);

@@ -26,57 +26,41 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const path = require("path");
-const fs = require("fs");
-const YAML = require("yaml");
+const request = require("superagent");
+const { isObject } = require("./common");
 
-const loadFile = (p, opts = {}) => {
-  const { encoding, required, isJson, isYaml } = {
-    encoding: "UTF-8",
-    required: true,
-    isJson: false,
-    isYaml: false,
-    ...opts,
+const createHttpClient = (cfg) => {
+  if (!cfg.enabled) {
+    return;
+  }
+
+  // TODO add proper error handling, no need to push this down to the client module
+  const getJson = (url, { headers, query }) => {
+    const req = request
+      .get(url)
+      .maxResponseSize(300000000)
+      .retry(10)
+      .set("Accept-Encoding", "gzip, deflate")
+      .set("Accept", "application/json; UTF-8")
+      .set("X-Requested-With", "XMLHttpRequest")
+      .auth(cfg.auth.username, cfg.auth.password);
+
+    if (isObject(headers)) {
+      req.set(headers);
+    }
+
+    if (isObject(query)) {
+      req.query(query);
+    }
+
+    return req;
   };
 
-  p = path.resolve(p);
+  const load = (httpRequest) => {
+    return cfg.module({ httpRequest, cfg, json: getJson });
+  };
 
-  if (required && !fs.existsSync(p)) {
-    console.error(`File ${p} does not exist`);
-    process.exit(-1);
-  }
-
-  let data = fs.readFileSync(p, { encoding });
-
-  if (isJson) {
-    data = JSON.parse(data);
-  } else if (isYaml) {
-    data = YAML.parse(data);
-  }
-
-  return data;
+  return load;
 };
 
-const loadModule = (module) => {
-  const mp = path.resolve(module);
-
-  if (!fs.existsSync(mp)) {
-    console.error(`Module ${mp} does not exist`);
-    process.exit(-1);
-  }
-
-  return require(mp);
-};
-
-const isFunction = (x) => {
-  return (
-    Object.prototype.toString.call(x) == "[object Function]" ||
-    Object.prototype.toString.call(x) == "[object AsyncFunction]"
-  );
-};
-
-const isObject = (x) => {
-  return typeof x === "object" && x !== null;
-};
-
-module.exports = { loadFile, loadModule, isFunction, isObject };
+module.exports = createHttpClient;

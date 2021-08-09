@@ -27,7 +27,7 @@
  */
 
 const { defaultsDeep } = require("lodash");
-const { loadFile } = require("./common");
+const { loadFile, loadModule, isFunction } = require("./common");
 
 const defaultConfig = {
   http: {
@@ -42,8 +42,19 @@ const defaultConfig = {
   },
   schema: undefined,
   keys: { public: undefined, private: undefined },
-  signature: { enabled: true, path: "/certificate/sign" },
-  verification: { enabled: true, path: "/certificate/verify" },
+  signature: { enabled: true, path: "/sign" },
+  verification: { enabled: true, path: "/verify" },
+  httpClient: {
+    enabled: false,
+    path: "/httpClient",
+    baseUrl: undefined,
+    module: undefined,
+    auth: {
+      // only basic auth currently supported
+      username: undefined,
+      password: undefined,
+    },
+  },
 };
 
 let config;
@@ -59,6 +70,18 @@ const parse = (cfg) => {
 
   if (cfg.signature.enabled && cfg.keys.private) {
     cfg.keys.private = loadFile(cfg.keys.private);
+  }
+
+  if (cfg.httpClient.enabled) {
+    if (!cfg.httpClient.module) {
+      throw new Error("When httpClient.enabled = true, httpClient.module is required.");
+    }
+
+    cfg.httpClient.module = loadModule(cfg.httpClient.module);
+
+    if (!isFunction(cfg.httpClient.module)) {
+      throw new Error("httpClient.module should be a CommonJS module and only return one method.");
+    }
   }
 
   return cfg;

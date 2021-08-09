@@ -26,57 +26,60 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const path = require("path");
-const fs = require("fs");
-const YAML = require("yaml");
+const Hapi = require("@hapi/hapi");
+const QRCode = require("qrcode");
 
-const loadFile = (p, opts = {}) => {
-  const { encoding, required, isJson, isYaml } = {
-    encoding: "UTF-8",
-    required: true,
-    isJson: false,
-    isYaml: false,
-    ...opts,
-  };
+const internals = {};
 
-  p = path.resolve(p);
+exports.plugin = {
+  name: "http-client-api-router",
+  desc: "API to fetch payload from a remote http url, transform, then sign",
+  version: "1.0.0",
+  register: async (/** @type Hapi.Server */ server, options) => {
+    server.route({
+      method: "GET",
+      path: "/",
+      options: {
+        auth: {
+          strategies: ["basic"],
+          mode: "required",
+        },
+      },
+      handler: internals.handler,
+    });
+  },
+};
 
-  if (required && !fs.existsSync(p)) {
-    console.error(`File ${p} does not exist`);
-    process.exit(-1);
+/**
+ * @param {Hapi.Request} request
+ * @param {Hapi.ResponseToolkit} h
+ * @returns
+ */
+internals.handler = async (request, h) => {
+  const { signature, validator } = request.server.methods;
+  const { httpClient } = request.server.methods;
+
+  const payload = await httpClient(request);
+  const isValid = validator(payload);
+
+  if (!isValid) {
+    return {
+      status: "ERROR",
+      data: validator.errors,
+    };
   }
 
-  let data = fs.readFileSync(p, { encoding });
+  const buffer = await signature(JSON.stringify(payload));
 
-  if (isJson) {
-    data = JSON.parse(data);
-  } else if (isYaml) {
-    data = YAML.parse(data);
-  }
+  const image = await QRCode.toBuffer(buffer.toString("hex"), {
+    scale: 4,
+    type: "image/png",
+    margin: 3,
+    errorCorrectionLevel: "quartile",
+  });
 
-  return data;
+  const response = h.response(image);
+  response.type("image/png");
+
+  return response;
 };
-
-const loadModule = (module) => {
-  const mp = path.resolve(module);
-
-  if (!fs.existsSync(mp)) {
-    console.error(`Module ${mp} does not exist`);
-    process.exit(-1);
-  }
-
-  return require(mp);
-};
-
-const isFunction = (x) => {
-  return (
-    Object.prototype.toString.call(x) == "[object Function]" ||
-    Object.prototype.toString.call(x) == "[object AsyncFunction]"
-  );
-};
-
-const isObject = (x) => {
-  return typeof x === "object" && x !== null;
-};
-
-module.exports = { loadFile, loadModule, isFunction, isObject };
