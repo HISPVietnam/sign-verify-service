@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "repository": "git@github.com:HISPVietnam/sign-verify-service.git",
-  "author": "Morten Hansen <morten@winterop.com>",
+  "author": "Morten Hansen <morten@hispvietnam.org>",
   "license": "BSD-3-Clause",
   "workspaces": [
     "packages/*"
