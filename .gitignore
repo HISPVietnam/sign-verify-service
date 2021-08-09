@@ -109,3 +109,4 @@ dist
 /svs
 /svs.*
 /.env
+.DS_Store
