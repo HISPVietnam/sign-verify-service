@@ -10,5 +10,9 @@
   ],
   "scripts": {
     "http:run": "nodemon -w packages/svs-http/lib -w packages/svs-core/lib -w svs.yml packages/svs-http/lib/index.js"
-  }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "engineStrict": true
 }
