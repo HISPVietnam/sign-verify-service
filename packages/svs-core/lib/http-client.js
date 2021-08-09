@@ -56,8 +56,8 @@ const createHttpClient = (cfg) => {
     return req;
   };
 
-  const load = (httpRequest) => {
-    return cfg.module({ httpRequest, request, cfg, json: getJson });
+  const load = (hapiRequest) => {
+    return cfg.module({ hapiRequest, request, cfg, json: getJson });
   };
 
   return load;

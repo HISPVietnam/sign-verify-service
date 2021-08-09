@@ -60,6 +60,14 @@ internals.handler = async (request, h) => {
   const { httpClient } = request.server.methods;
 
   const payload = await httpClient(request);
+
+  if (!payload) {
+    return {
+      status: "ERROR",
+      data: {},
+    };
+  }
+
   const isValid = validator(payload);
 
   if (!isValid) {
