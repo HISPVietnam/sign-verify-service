@@ -31,7 +31,6 @@
 
 const Ajv2020 = require("ajv/dist/2020");
 const addFormats = require("ajv-formats");
-const { loadFile } = require("./common");
 
 const defaultSchema = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
