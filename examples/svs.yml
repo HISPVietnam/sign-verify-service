@@ -1,3 +1,5 @@
+# see config.js for all available configuration options
+
 http:
   port: 3000
   host: localhost
@@ -12,11 +14,14 @@ keys:
 # schema: ./schemas/status.json
 signature:
   enabled: true
+  path: /api/sign
 verification:
   enabled: true
+  path: /api/verify
 httpClient:
   enabled: true
   module: ./svs-dhis2.js
+  path: /api/dhis2
   baseUrl: https://play.dhis2.org/dev
   auth:
     username: admin
