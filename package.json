@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "http:run": "nodemon -w packages/svs-http/lib -w packages/svs-core/lib -w svs.yml -w svs-* packages/svs-http/lib/index.js",
-    "format": "npx prettier -w **/*.js"
+    "format": "npx prettier -w ."
   },
   "engines": {
     "node": ">=14.0.0"
