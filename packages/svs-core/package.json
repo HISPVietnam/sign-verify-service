@@ -30,9 +30,6 @@
     "nodemon": "^2.0.12",
     "pm2": "^5.1.0"
   },
-  "prettier": {
-    "printWidth": 120
-  },
   "engines": {
     "node": ">=14.0.0"
   },
