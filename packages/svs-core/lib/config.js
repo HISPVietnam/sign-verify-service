@@ -59,7 +59,7 @@ const defaultConfig = {
 
 let config;
 
-const parse = (cfg) => {
+const parse = cfg => {
   if (cfg.schema) {
     cfg.schema = loadFile(cfg.schema, { isJson: true });
   }
@@ -87,7 +87,7 @@ const parse = (cfg) => {
   return cfg;
 };
 
-module.exports = (configFile) => {
+module.exports = configFile => {
   if (config) {
     return config;
   }

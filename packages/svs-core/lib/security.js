@@ -34,7 +34,7 @@ const createHash = require("crypto").createHash;
 const { Certificate, PrivateKey } = require("@fidm/x509");
 const base45 = require("base45");
 
-const hashPassword = (pw) => {
+const hashPassword = pw => {
   return Bcrypt.hashSync(pw, Bcrypt.genSaltSync(10));
 };
 
@@ -71,7 +71,7 @@ const coseSignature = async (data, publicKey, privateKey) => {
     },
   };
 
-  return cose.sign.create(headers, plaintext, signer).then((buf) => {
+  return cose.sign.create(headers, plaintext, signer).then(buf => {
     buf = zlib.deflateSync(buf);
     buf = "HC1:" + base45.encode(buf);
 
@@ -100,19 +100,19 @@ const coseVerification = (data, publicKey) => {
 
   const verifier = { key: { x: keyX, y: keyY, kid: createFingerprint(publicKey) } };
 
-  return cose.sign.verify(data, verifier).then((buf) => cbor.decode(buf));
+  return cose.sign.verify(data, verifier).then(buf => cbor.decode(buf));
 };
 
-const createFingerprint = (publicKey) => {
+const createFingerprint = publicKey => {
   const hash = createHash("sha256").update(publicKey.raw).digest();
   return new Uint8Array(hash).slice(0, 8);
 };
 
-const createSecurity = (cfg) => {
+const createSecurity = cfg => {
   const publicKey = Certificate.fromPEM(cfg.keys.public);
   const privateKey = PrivateKey.fromPEM(cfg.keys.private);
 
-  const auths = cfg.http.auth.map((p) => {
+  const auths = cfg.http.auth.map(p => {
     return {
       username: p.username,
       password: hashPassword(p.password),
@@ -125,12 +125,12 @@ const createSecurity = (cfg) => {
   };
 
   if (cfg.verification.enabled) {
-    o.verification = (data) => coseVerification(data, publicKey);
+    o.verification = data => coseVerification(data, publicKey);
     o.fingerprint = () => createFingerprint(publicKey);
   }
 
   if (cfg.signature.enabled) {
-    o.signature = (data) => coseSignature(data, publicKey, privateKey);
+    o.signature = data => coseSignature(data, publicKey, privateKey);
   }
 
   return o;

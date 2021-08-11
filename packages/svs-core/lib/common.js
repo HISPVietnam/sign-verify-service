@@ -57,7 +57,7 @@ const loadFile = (p, opts = {}) => {
   return data;
 };
 
-const loadModule = (module) => {
+const loadModule = module => {
   const mp = path.resolve(module);
 
   if (!fs.existsSync(mp)) {
@@ -68,14 +68,14 @@ const loadModule = (module) => {
   return require(mp);
 };
 
-const isFunction = (x) => {
+const isFunction = x => {
   return (
     Object.prototype.toString.call(x) == "[object Function]" ||
     Object.prototype.toString.call(x) == "[object AsyncFunction]"
   );
 };
 
-const isObject = (x) => {
+const isObject = x => {
   return typeof x === "object" && x !== null;
 };
 

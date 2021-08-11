@@ -29,7 +29,7 @@
 const request = require("superagent");
 const { isObject } = require("./common");
 
-const createHttpClient = (cfg) => {
+const createHttpClient = cfg => {
   if (!cfg.enabled) {
     return;
   }
@@ -56,7 +56,7 @@ const createHttpClient = (cfg) => {
     return req;
   };
 
-  const load = (hapiRequest) => {
+  const load = hapiRequest => {
     return cfg.module({ hapiRequest, request, cfg, json: getJson });
   };
 

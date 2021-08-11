@@ -34,7 +34,7 @@ const createServer = async (cfg, security, logger) => {
     host: cfg.http.host,
     port: cfg.http.port,
     query: {
-      parser: (query) => Qs.parse(query),
+      parser: query => Qs.parse(query),
     },
   });
 
@@ -112,7 +112,7 @@ const startServer = async ({ cfg, security, schemaValidator, logger, httpClient 
 
   server.log(`Server running on ${server.info.uri}`);
 
-  process.on("unhandledRejection", (err) => {
+  process.on("unhandledRejection", err => {
     server.log(err);
     process.exit(1);
   });

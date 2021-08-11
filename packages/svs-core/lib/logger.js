@@ -39,7 +39,7 @@ const createLogger = ({ name }) => {
     multistream([
       { stream: process.stdout },
       { stream: fs.createWriteStream(path.resolve(`${name}.log`), { flags: "a" }) },
-    ])
+    ]),
   );
 };
 
