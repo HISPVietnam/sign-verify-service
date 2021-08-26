@@ -12,17 +12,16 @@ keys:
   public: ./certs/dsc-worker.pem
   private: ./certs/dsc-worker.p8
 # schema: ./schemas/status.json
+# schema: ../ehn-dcc-schema/DCC.combined-schema.json
 signature:
   enabled: true
-  path: /api/sign
 verification:
   enabled: true
-  path: /api/verify
 httpClient:
   enabled: true
-  module: ./svs-dhis2.js
-  path: /api/dhis2
-  baseUrl: https://play.dhis2.org/dev
+  path: /dhis2/{te}
+  module: ./x.js
+  baseUrl: x
   auth:
-    username: admin
-    password: district
+    username: x
+    password: x
