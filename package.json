@@ -9,15 +9,15 @@
     "packages/*"
   ],
   "scripts": {
-    "http-api-full:run": "nodemon -w packages/svs-http-api-full/lib -w packages/svs-core/lib -w svs.yml -w svs-* packages/svs-http-api-full/lib/index.js",
+    "http-api:run": "nodemon -w packages/svs-http-api/lib -w packages/svs-core/lib -w svs.yml -w svs-* packages/svs-http-api/lib/index.js",
     "http-api-sign:run": "nodemon -w packages/svs-http-api-sign/lib -w packages/svs-core/lib -w svs.yml -w svs-* packages/svs-http-api-sign/lib/index.js",
     "http-api-verify:run": "nodemon -w packages/svs-http-api-verify/lib -w packages/svs-core/lib -w svs.yml -w svs-* packages/svs-http-api-verify/lib/index.js",
-    "docker:build": "docker build -f Dockerfile . -t svs-http-full",
-    "docker:run": "docker run --name svs-http-full -it -p 3000:3000 --rm svs-http-full",
-    "docker:build-sign": "docker build -f Dockerfile.sign . -t svs-http-sign",
-    "docker:run-sign": "docker run --name svs-http-sign -it -p 3000:3000 --rm svs-http-sign",
-    "docker:build-verify": "docker build -f Dockerfile.verify . -t svs-http-verify",
-    "docker:run-verify": "docker run --name svs-http-verify -it -p 3000:3000 --rm svs-http-verify",
+    "docker:build": "docker build -f Dockerfile . -t svs-http-api",
+    "docker:run": "docker run --name svs-http-api -it -p 3000:3000 --rm svs-http-api",
+    "docker:build-sign": "docker build -f Dockerfile.sign . -t svs-http-api-sign",
+    "docker:run-sign": "docker run --name svs-http-api-sign -it -p 3000:3000 --rm svs-http-api-sign",
+    "docker:build-verify": "docker build -f Dockerfile.verify . -t svs-http-api-verify",
+    "docker:run-verify": "docker run --name svs-http-api-verify -it -p 3000:3000 --rm svs-http-api-verify",
     "format": "npx prettier -w ."
   },
   "engines": {
