@@ -59,12 +59,6 @@ const createServer = async (cfg, security, logger) => {
     });
   }
 
-  if (cfg.verification.enabled) {
-    await server.register(require("./routes/verification-api-router"), {
-      routes: { prefix: cfg.verification.path },
-    });
-  }
-
   if (cfg.httpClient.enabled) {
     await server.register(require("./routes/http-client-api-router"), {
       routes: { prefix: cfg.httpClient.path },
@@ -76,10 +70,6 @@ const createServer = async (cfg, security, logger) => {
 
 const startServer = async ({ cfg, security, schemaValidator, logger, httpClient }) => {
   const server = await createServer(cfg, security, logger);
-
-  if (cfg.verification.enabled) {
-    server.method("verification", security.verification);
-  }
 
   if (cfg.signature.enabled) {
     server.method("signature", security.signature);

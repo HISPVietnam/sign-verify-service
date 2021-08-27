@@ -7,4 +7,4 @@
 - [x] Add back Docker support
 - [ ] Add back Caxa support
 - [x] Update to use YAML for configuration
-- [ ] Split out separate packages for http-sign-api (including http client) and http-verify-api
+- [x] Split out separate packages for http-api-sign (including http client) and http-api-verify

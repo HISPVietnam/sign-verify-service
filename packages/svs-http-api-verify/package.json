@@ -1,5 +1,5 @@
 {
-  "name": "@svs/http",
+  "name": "@svs/http-api-verify",
   "version": "1.0.0",
   "description": "Sign-Verify-Service",
   "main": "lib/index.js",
