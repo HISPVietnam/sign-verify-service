@@ -9,8 +9,9 @@
     "packages/*"
   ],
   "scripts": {
-    "http-sign:run": "nodemon -w packages/svs-http-api-sign/lib -w packages/svs-core/lib -w svs.yml -w svs-* packages/svs-http-api-sign/lib/index.js",
-    "http-verify:run": "nodemon -w packages/svs-http-api-verify/lib -w packages/svs-core/lib -w svs.yml -w svs-* packages/svs-http-api-verify/lib/index.js",
+    "http-api-full:run": "nodemon -w packages/svs-http-api-full/lib -w packages/svs-core/lib -w svs.yml -w svs-* packages/svs-http-api-full/lib/index.js",
+    "http-api-sign:run": "nodemon -w packages/svs-http-api-sign/lib -w packages/svs-core/lib -w svs.yml -w svs-* packages/svs-http-api-sign/lib/index.js",
+    "http-api-verify:run": "nodemon -w packages/svs-http-api-verify/lib -w packages/svs-core/lib -w svs.yml -w svs-* packages/svs-http-api-verify/lib/index.js",
     "format": "npx prettier -w ."
   },
   "engines": {
