@@ -4,9 +4,6 @@
   "description": "Sign-Verify-Service",
   "main": "lib/index.js",
   "scripts": {
-    "caxa:build": "caxa --input . --output svs-http -- '{{caxa}}/node_modules/.bin/node' '{{caxa}}/lib/index.js'",
-    "docker:build": "docker build . -t svs-http",
-    "docker:run": "docker run --name svs-http -it -p 3000:3000 --rm svs-http"
   },
   "repository": {
     "type": "git",

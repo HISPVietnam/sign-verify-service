@@ -6,8 +6,8 @@ COPY svs.yml .
 COPY certs .
 COPY schemas .
 COPY packages/svs-core ./packages/svs-core
-COPY packages/svs-http-api-full ./packages/svs-http-api-full
+COPY packages/svs-http-api-sign ./packages/svs-http-api-sign
 RUN yarn install --pure-lockfile --non-interactive
 COPY . .
 EXPOSE 3000
-CMD [ "node", "packages/svs-http-api-full/lib/index.js" ]
+CMD [ "node", "packages/svs-http-api-sign/lib/index.js" ]
