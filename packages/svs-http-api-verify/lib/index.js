@@ -29,9 +29,11 @@
 const { createLogger } = require("@svs/core/lib/logger");
 const createSecurity = require("@svs/core/lib/security");
 const createSchemaValidator = require("@svs/core/lib/schema");
-const { startServer } = require("./server");
+const { startServer } = require("@svs/http-api/lib/server");
 
 const cfg = require("@svs/core/lib/config")("svs.yml");
+cfg.signature.enabled = false;
+cfg.httpClient.enabled = false;
 
 startServer({
   cfg,

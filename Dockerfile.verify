@@ -6,6 +6,7 @@ COPY svs.yml .
 COPY certs .
 COPY schemas .
 COPY packages/svs-core ./packages/svs-core
+COPY packages/svs-http-api ./packages/svs-http-api
 COPY packages/svs-http-api-verify ./packages/svs-http-api-verify
 RUN yarn install --pure-lockfile --non-interactive
 COPY . .
