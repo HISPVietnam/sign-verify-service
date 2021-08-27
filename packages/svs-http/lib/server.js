@@ -53,23 +53,6 @@ const createServer = async (cfg, security, logger) => {
 
   server.auth.strategy("basic", "basic", { validate: security.authenticate });
 
-  server.views({
-    engines: {
-      ejs: require("ejs"),
-    },
-    relativeTo: __dirname,
-    path: "views",
-    isCached: false,
-  });
-
-  server.route({
-    method: "GET",
-    path: "/",
-    handler: (request, h) => {
-      return h.view("index", {});
-    },
-  });
-
   if (cfg.signature.enabled) {
     await server.register(require("./routes/signature-api-router"), {
       routes: { prefix: cfg.signature.path },
