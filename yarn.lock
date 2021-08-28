@@ -3145,9 +3145,9 @@ supports-color@^7.1.0:
     has-flag "^4.0.0"
 
 systeminformation@^5.7:
-  version "5.8.2"
-  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-5.8.2.tgz#c9cfada753dcb5eadb27e2350eecd509f3a34d42"
-  integrity sha512-XxK/gHdfGFtCAv7JLwGlPoU8bfkcTHgcGSU9LqgbdURwOgwyYlfX+jailzh2eX//9r+Wg53oOv+/DE30KNK2qA==
+  version "5.8.6"
+  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-5.8.6.tgz#62a6f18a024a4a6308559f13edaf1c7803e8ca0b"
+  integrity sha512-R37NZR9f6OejKvERiatjh1vK49xkJ/MOgFpwpCw2h0NoD+1nKAgGzxkyjNX7bsf6ADaKzyAZ2SFK1mXddytIaA==
 
 tar-stream@^2.2.0:
   version "2.2.0"
@@ -3161,9 +3161,9 @@ tar-stream@^2.2.0:
     readable-stream "^3.1.1"
 
 tar@^6.1.0:
-  version "6.1.10"
-  resolved "https://registry.yarnpkg.com/tar/-/tar-6.1.10.tgz#8a320a74475fba54398fa136cd9883aa8ad11175"
-  integrity sha512-kvvfiVvjGMxeUNB6MyYv5z7vhfFRwbwCXJAeL0/lnbrttBVqcMOnpHUf0X42LrPMR8mMpgapkJMchFH4FSHzNA==
+  version "6.1.11"
+  resolved "https://registry.yarnpkg.com/tar/-/tar-6.1.11.tgz#6760a38f003afa1b2ffd0ffe9e9abbd0eab3d621"
+  integrity sha512-an/KZQzQUkZCkuoAA64hM92X0Urb6VpRhAFllDzz44U2mcD5scmT3zBc4VgVpkugF580+DQn8eAFSyoQt0tznA==
   dependencies:
     chownr "^2.0.0"
     fs-minipass "^2.0.0"
