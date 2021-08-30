@@ -31,13 +31,7 @@ const createSecurity = require("@svs/core/lib/security");
 const createSchemaValidator = require("@svs/core/lib/schema");
 const { startServer } = require("@svs/http-api/lib/server");
 
-let configFilename = "svs.yml";
-
-if (process.argv.length > 2) {
-  configFilename = process.argv[2];
-}
-
-const cfg = require("@svs/core/lib/config")(configFilename);
+const cfg = require("@svs/core/lib/config")(process.argv[2] || "svs.yml");
 
 cfg.signature.enabled = false;
 cfg.httpClient.enabled = false;
