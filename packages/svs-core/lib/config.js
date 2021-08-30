@@ -40,6 +40,10 @@ const defaultConfig = {
       },
     ],
   },
+  logging: {
+    enabled: true,
+    name: "svs",
+  },
   schema: undefined,
   keys: { public: undefined, private: undefined },
   signature: { enabled: true, path: "/sign" },
