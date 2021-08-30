@@ -4,6 +4,9 @@
   "description": "Sign-Verify-Service",
   "main": "lib/index.js",
   "scripts": {},
+  "bin": {
+    "svs-sign": "./lib/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HISPVietnam/sign-verify-service.git"

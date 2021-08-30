@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /*
  * Copyright (c) 2021, HISP Vietnam, Co.Ltd
  * All rights reserved.
