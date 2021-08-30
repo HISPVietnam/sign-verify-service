@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Sign-Verify-Service",
   "main": "lib/index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HISPVietnam/sign-verify-service.git"
@@ -23,5 +22,8 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "engineStrict": true
+  "engineStrict": true,
+  "devDependencies": {
+    "pm2": "^5.1.1"
+  }
 }
