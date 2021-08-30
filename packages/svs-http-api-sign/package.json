@@ -24,6 +24,7 @@
   },
   "engineStrict": true,
   "devDependencies": {
+    "nodemon": "^2.0.12",
     "pm2": "^5.1.1"
   }
 }

@@ -5,6 +5,5 @@
 - [x] Refactor into Yarn workspaces (split out core and http to start with)
 - [ ] Support DSC masterlist
 - [x] Add back Docker support
-- [ ] Add back Caxa support
 - [x] Update to use YAML for configuration
 - [x] Split out separate packages for http-api-sign (including http client) and http-api-verify

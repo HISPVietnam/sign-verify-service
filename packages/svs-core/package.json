@@ -26,7 +26,6 @@
     "yaml": "^1.10.2"
   },
   "devDependencies": {
-    "caxa": "^2.1.0",
     "nodemon": "^2.0.12",
     "pm2": "^5.1.0"
   },
