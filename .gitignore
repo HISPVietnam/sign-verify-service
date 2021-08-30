@@ -111,3 +111,4 @@ dist
 /svs-*
 /.env
 .DS_Store
+instances/
