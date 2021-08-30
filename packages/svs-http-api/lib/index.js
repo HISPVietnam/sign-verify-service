@@ -32,12 +32,18 @@ const createSchemaValidator = require("@svs/core/lib/schema");
 const createHttpClient = require("@svs/core/lib/http-client");
 const { startServer } = require("./server");
 
-const cfg = require("@svs/core/lib/config")("svs.yml");
+let configFilename = "svs.yml";
+
+if (process.argv.length > 2) {
+  configFilename = process.argv[2];
+}
+
+const cfg = require("@svs/core/lib/config")(configFilename);
 
 startServer({
   cfg,
   security: createSecurity(cfg),
   schemaValidator: createSchemaValidator(cfg.schema),
-  logger: createLogger({ name: "svs" }),
+  logger: createLogger({ name: cfg.logging.name }),
   httpClient: createHttpClient(cfg.httpClient),
 });
