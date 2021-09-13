@@ -53,7 +53,7 @@ const defaultConfig = {
       version: undefined,
       scale: 4,
       type: "png",
-      margin: 3,
+      margin: 2,
       errorCorrectionLevel: "quartile",
       quality: 0.92,
       deflateLevel: 9,
