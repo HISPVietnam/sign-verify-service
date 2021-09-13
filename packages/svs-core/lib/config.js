@@ -46,7 +46,20 @@ const defaultConfig = {
   },
   schema: undefined,
   keys: { public: undefined, private: undefined },
-  signature: { enabled: true, path: "/sign" },
+  signature: {
+    enabled: true,
+    path: "/sign",
+    qrCode: {
+      scale: 4,
+      type: "image/png",
+      margin: 3,
+      errorCorrectionLevel: "quartile",
+      color: {
+        dark: "#000000",
+        light: "#ffffff",
+      },
+    },
+  },
   verification: { enabled: true, path: "/verify" },
   httpClient: {
     enabled: false,

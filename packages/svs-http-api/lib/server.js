@@ -77,6 +77,8 @@ const createServer = async (cfg, security, logger) => {
 const startServer = async ({ cfg, security, schemaValidator, logger, httpClient }) => {
   const server = await createServer(cfg, security, logger);
 
+  server.method("cfg", () => cfg);
+
   if (cfg.signature.enabled) {
     server.method("signature", security.signature);
   }

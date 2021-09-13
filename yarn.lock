@@ -469,9 +469,9 @@ ajv-formats@^2.1.0:
     ajv "^8.0.0"
 
 ajv@^8.0.0, ajv@^8.6.2:
-  version "8.6.2"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.6.2.tgz#2fb45e0e5fcbc0813326c1c3da535d1881bb0571"
-  integrity sha512-9807RlWAgT564wT+DjeyU5OFMPjmzxVobvDFmNAhY+5zD6A2ly3jDp6sgnfyDtlIQ+7H97oc/DGCzzfu9rjw9w==
+  version "8.6.3"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.6.3.tgz#11a66527761dc3e9a3845ea775d2d3c0414e8764"
+  integrity sha512-SMJOdDP6LqTkD0Uq8qLi+gMwSt0imXLSV080qFVwJCpH9U6Mb+SUGHAXM0KNbcBPguytWyvFxcHgMLe2D2XSpw==
   dependencies:
     fast-deep-equal "^3.1.1"
     json-schema-traverse "^1.0.0"
@@ -2775,9 +2775,9 @@ supports-color@^7.1.0:
     has-flag "^4.0.0"
 
 systeminformation@^5.7:
-  version "5.8.7"
-  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-5.8.7.tgz#b2ab01f5568d996ac4ef92203bb59bb1327b64c2"
-  integrity sha512-e7b47PXn+GvPHLZm7FxC+IgPs5lqqsrmw7xtdxrr0U8aivYZO6V3CawMqCy5bfGB/ghZh/7AWlJEoXUPLyH3iw==
+  version "5.8.9"
+  resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-5.8.9.tgz#59ef32247d5ff8baf25d147285b10d026093a05f"
+  integrity sha512-dWI4eojNu3cSrMBSSfwV1Xq52mKj2zlliurvYV/y9v1xlv6W86ZKKalSkSZAurww5Xb7+ty5gCKIkQCX2SJK3g==
 
 tar@^6.1.0:
   version "6.1.11"

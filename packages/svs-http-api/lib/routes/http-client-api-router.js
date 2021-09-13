@@ -56,8 +56,8 @@ exports.plugin = {
  * @returns
  */
 internals.handler = async (request, h) => {
-  const { signature, validator } = request.server.methods;
-  const { httpClient } = request.server.methods;
+  const { signature, validator, httpClient, cfg } = request.server.methods;
+  const { qrCode } = cfg().signature;
 
   const payload = await httpClient(request);
 
@@ -80,10 +80,14 @@ internals.handler = async (request, h) => {
   const buffer = await signature(JSON.stringify(payload));
 
   const image = await QRCode.toBuffer(buffer.toString("hex"), {
-    scale: 4,
-    type: "image/png",
-    margin: 3,
-    errorCorrectionLevel: "quartile",
+    scale: qrCode.scale,
+    type: qrCode.type,
+    margin: qrCode.margin,
+    errorCorrectionLevel: qrCode.errorCorrectionLevel,
+    color: {
+      dark: qrCode.color.dark,
+      light: qrCode.color.light,
+    },
   });
 
   const response = h.response(image);
