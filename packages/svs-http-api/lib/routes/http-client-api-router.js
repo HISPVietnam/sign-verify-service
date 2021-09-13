@@ -84,6 +84,8 @@ internals.handler = async (request, h) => {
     type: qrCode.type,
     margin: qrCode.margin,
     errorCorrectionLevel: qrCode.errorCorrectionLevel,
+    quality: qrCode.quality,
+    deflateLevel: qrCode.deflateLevel,
     color: {
       dark: qrCode.color.dark,
       light: qrCode.color.light,

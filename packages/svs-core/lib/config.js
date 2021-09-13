@@ -51,9 +51,11 @@ const defaultConfig = {
     path: "/sign",
     qrCode: {
       scale: 4,
-      type: "image/png",
+      type: "png",
       margin: 3,
       errorCorrectionLevel: "quartile",
+      quality: 0.92,
+      deflateLevel: 9,
       color: {
         dark: "#000000",
         light: "#ffffff",
