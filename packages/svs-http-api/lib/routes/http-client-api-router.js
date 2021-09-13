@@ -80,6 +80,7 @@ internals.handler = async (request, h) => {
   const buffer = await signature(JSON.stringify(payload));
 
   const image = await QRCode.toBuffer(buffer.toString("hex"), {
+    version: qrCode.version,
     scale: qrCode.scale,
     type: qrCode.type,
     margin: qrCode.margin,

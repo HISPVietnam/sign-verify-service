@@ -50,6 +50,7 @@ const defaultConfig = {
     enabled: true,
     path: "/sign",
     qrCode: {
+      version: undefined,
       scale: 4,
       type: "png",
       margin: 3,
