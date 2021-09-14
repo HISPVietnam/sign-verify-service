@@ -53,7 +53,6 @@ const defaultConfig = {
     qrCode: {
       version: undefined,
       scale: 4,
-      type: "png",
       margin: 2,
       errorCorrectionLevel: "quartile",
       quality: 0.92,

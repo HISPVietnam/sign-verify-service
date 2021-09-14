@@ -82,7 +82,7 @@ internals.handler = async (request, h) => {
   const image = await QRCode.toBuffer(buffer.toString("hex"), {
     version: qrCode.version,
     scale: qrCode.scale,
-    type: qrCode.type,
+    type: "png",
     margin: qrCode.margin,
     errorCorrectionLevel: qrCode.errorCorrectionLevel,
     quality: qrCode.quality,
