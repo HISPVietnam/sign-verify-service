@@ -127,6 +127,11 @@ const createSecurity = cfg => {
   if (cfg.verification.enabled) {
     o.verification = data => coseVerification(data, publicKey);
     o.fingerprint = () => createFingerprint(publicKey);
+
+    cfg.certificateIssuer = {
+      commonName: publicKey.subject.getField("CN").value,
+      countryName: publicKey.subject.getField("C").value,
+    };
   }
 
   if (cfg.signature.enabled) {

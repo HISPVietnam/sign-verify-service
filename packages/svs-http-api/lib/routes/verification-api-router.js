@@ -55,7 +55,7 @@ exports.plugin = {
  * @returns
  */
 internals.handler = async (request, h) => {
-  const { verification, validator } = request.server.methods;
+  const { verification, validator, cfg } = request.server.methods;
 
   try {
     const buffer = await verification(request.payload);
@@ -72,6 +72,9 @@ internals.handler = async (request, h) => {
 
     return {
       status: "VERIFIED",
+      metadata: {
+        certificateIssuer: cfg().certificateIssuer,
+      },
       data,
     };
   } catch (err) {
