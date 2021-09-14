@@ -75,6 +75,9 @@ const defaultConfig = {
       password: undefined,
     },
   },
+  registry: {
+    enabled: true,
+  },
 };
 
 let config;
