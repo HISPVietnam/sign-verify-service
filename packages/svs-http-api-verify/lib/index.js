@@ -28,7 +28,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const { createLogger } = require("@svs/core/lib/logger");
+const createLogger = require("@svs/core/lib/logger");
 const createSecurity = require("@svs/core/lib/security");
 const createSchemaValidator = require("@svs/core/lib/schema");
 const { startServer } = require("@svs/http-api/lib/server");
