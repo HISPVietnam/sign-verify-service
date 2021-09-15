@@ -28,6 +28,7 @@
 
 const Hapi = require("@hapi/hapi");
 const QRCode = require("qrcode");
+const getPath = require("lodash.get");
 
 const internals = {};
 
@@ -95,6 +96,18 @@ internals.handler = async (request, h) => {
 
   const response = h.response(image);
   response.type("image/png");
+
+  if (cfg().registry.enabled) {
+    const key = getPath(payload, cfg().registry.key);
+    request.server.methods.registry(key, {
+      id: key,
+      created_at: new Date().toISOString(),
+      username: request.auth.credentials.username,
+      ip: request.info.remoteAddress,
+      revoked: false,
+      signature: buffer.toString("hex"),
+    });
+  }
 
   return response;
 };

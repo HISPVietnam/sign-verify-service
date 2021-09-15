@@ -74,7 +74,7 @@ const createServer = async (cfg, security, logger) => {
   return server;
 };
 
-const startServer = async ({ cfg, security, schemaValidator, logger, httpClient }) => {
+const startServer = async ({ cfg, security, schemaValidator, logger, httpClient, registry }) => {
   const server = await createServer(cfg, security, logger);
 
   server.method("cfg", () => cfg);
@@ -89,6 +89,10 @@ const startServer = async ({ cfg, security, schemaValidator, logger, httpClient 
 
   if (cfg.verification.enabled) {
     server.method("verification", security.verification);
+  }
+
+  if (cfg.registry.enabled) {
+    server.method("registry", registry);
   }
 
   server.method("validator", schemaValidator);

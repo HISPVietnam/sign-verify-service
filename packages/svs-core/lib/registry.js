@@ -38,7 +38,23 @@ const createRegistry = cfg => {
   const db = sqlite3(cfg.filename);
   db.exec(fs.readFileSync(path.resolve(__dirname, "./registry.sql"), { encoding: "utf-8" }));
 
-  return db;
+  return (key, value) => {
+    let stmt = db.prepare("select * from registry where key=?");
+    let data = stmt.get(key);
+
+    if (!data) {
+      data = [value];
+
+      stmt = db.prepare("insert into registry (key, value) values (?, ?)");
+      stmt.run(key, JSON.stringify(data));
+    } else {
+      data = JSON.parse(data.value);
+      data.push(value);
+
+      stmt = db.prepare("update registry set value=? where key=?");
+      stmt.run(JSON.stringify(data), key);
+    }
+  };
 };
 
 module.exports = createRegistry;

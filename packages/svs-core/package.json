@@ -23,6 +23,7 @@
     "better-sqlite3": "^7.4.3",
     "cose-js": "^0.6.0",
     "lodash": "^4.17.21",
+    "lodash.get": "^4.4.2",
     "superagent": "^6.1.0",
     "yaml": "^1.10.2"
   },
