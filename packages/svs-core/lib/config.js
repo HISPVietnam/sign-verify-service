@@ -75,6 +75,11 @@ const defaultConfig = {
       password: undefined,
     },
   },
+  registry: {
+    enabled: false,
+    filename: "registry.sqlite3",
+    key: undefined,
+  },
 };
 
 let config;
@@ -106,6 +111,10 @@ const parse = (cp, cfg) => {
 
   if (cfg.logging.enabled) {
     cfg.logging.filename = path.resolve(cp, cfg.logging.filename);
+  }
+
+  if (cfg.registry.enabled) {
+    cfg.registry.filename = path.resolve(cp, cfg.registry.filename);
   }
 
   return cfg;

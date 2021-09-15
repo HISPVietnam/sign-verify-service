@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
  * Copyright (c) 2021, HISP Vietnam, Co.Ltd
  * All rights reserved.
@@ -28,20 +26,19 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const createLogger = require("@svs/core/lib/logger");
-const createSecurity = require("@svs/core/lib/security");
-const createSchemaValidator = require("@svs/core/lib/schema");
-const createHttpClient = require("@svs/core/lib/http-client");
-const createRegistry = require("@svs/core/lib/registry");
-const { startServer } = require("./server");
+const fs = require("fs");
+const path = require("path");
+const sqlite3 = require("better-sqlite3");
 
-const cfg = require("@svs/core/lib/config")(process.argv[2] || "svs.yml");
+const createRegistry = cfg => {
+  if (!cfg.enabled) {
+    return;
+  }
 
-startServer({
-  cfg,
-  security: createSecurity(cfg),
-  schemaValidator: createSchemaValidator(cfg.schema),
-  logger: createLogger({ filename: cfg.logging.filename }),
-  httpClient: createHttpClient(cfg.httpClient),
-  registry: createRegistry(cfg.registry),
-});
+  const db = sqlite3(cfg.filename);
+  db.exec(fs.readFileSync(path.resolve(__dirname, "./registry.sql"), { encoding: "utf-8" }));
+
+  return db;
+};
+
+module.exports = createRegistry;
