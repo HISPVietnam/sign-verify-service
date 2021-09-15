@@ -1,0 +1,1 @@
+INSERT INTO registry (identifier, created_at, username, ip, revoked, signature) VALUES(?, ?, ?, ?, ?, ?)
