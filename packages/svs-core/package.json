@@ -21,7 +21,11 @@
     "base45": "^3.0.0",
     "bcrypt": "^5.0.1",
     "cose-js": "^0.6.0",
+    "encoding-down": "^7.0.0",
+    "leveldown": "^6.0.2",
+    "levelup": "^5.0.1",
     "lodash": "^4.17.21",
+    "lodash.get": "^4.4.2",
     "superagent": "^6.1.0",
     "yaml": "^1.10.2"
   },

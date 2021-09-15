@@ -77,6 +77,8 @@ const defaultConfig = {
   },
   registry: {
     enabled: true,
+    // will resolve to svs.yml path + registry.path
+    path: "registry.db",
   },
 };
 
@@ -109,6 +111,10 @@ const parse = (cp, cfg) => {
 
   if (cfg.logging.enabled) {
     cfg.logging.filename = path.resolve(cp, cfg.logging.filename);
+  }
+
+  if (cfg.registry.enabled) {
+    cfg.registry.path = path.resolve(cp, cfg.registry.path);
   }
 
   return cfg;

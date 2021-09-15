@@ -33,11 +33,11 @@ const multistream = require("pino-multi-stream").multistream;
 const createLogger = ({ filename }) => {
   return require("pino")(
     {
-      name: filename,
+      name: path.basename(filename),
       level: "info",
     },
     multistream([{ stream: process.stdout }, { stream: fs.createWriteStream(path.resolve(filename), { flags: "a" }) }]),
   );
 };
 
-module.exports = { createLogger };
+module.exports = createLogger;

@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
  * Copyright (c) 2021, HISP Vietnam, Co.Ltd
  * All rights reserved.
@@ -28,20 +26,17 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const createLogger = require("@svs/core/lib/logger");
-const createSecurity = require("@svs/core/lib/security");
-const createRegistry = require("@svs/core/lib/registry");
-const createSchemaValidator = require("@svs/core/lib/schema");
-const createHttpClient = require("@svs/core/lib/http-client");
-const { startServer } = require("./server");
+const leveldown = require("leveldown");
+const levelup = require("levelup");
+const encode = require("encoding-down");
 
-const cfg = require("@svs/core/lib/config")(process.argv[2] || "svs.yml");
+const createRegistry = cfg => {
+  if (!cfg.enabled) {
+    return;
+  }
 
-startServer({
-  cfg,
-  security: createSecurity(cfg),
-  schemaValidator: createSchemaValidator(cfg.schema),
-  logger: createLogger({ filename: cfg.logging.filename }),
-  httpClient: createHttpClient(cfg.httpClient),
-  registry: createRegistry(cfg.registry),
-});
+  // TODO expose a service interface (not just raw connection)
+  return levelup(encode(leveldown(cfg.path), { valueEncoding: "json" }));
+};
+
+module.exports = createRegistry;
