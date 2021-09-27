@@ -30,9 +30,6 @@
 
 const yargs = require("yargs/yargs");
 const { hideBin } = require("yargs/helpers");
-const { Certificate } = require("@fidm/x509");
-const fs = require("fs");
-const path = require("path");
 
 const argBuilder = yargs(hideBin(process.argv))
   .scriptName("svs")
