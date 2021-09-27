@@ -118,7 +118,10 @@ module.exports = configFile => {
 
   const configPath = path.resolve(path.dirname(configFile));
 
-  config = parse(configPath, defaultsDeep({}, loadFile(configFile, { isYaml: true }), defaultConfig));
+  config = parse(
+    configPath,
+    defaultsDeep({}, loadFile(configFile, { isYaml: true }), defaultConfig),
+  );
 
   return config;
 };

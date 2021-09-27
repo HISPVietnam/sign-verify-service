@@ -34,26 +34,10 @@ const { Certificate } = require("@fidm/x509");
 const fs = require("fs");
 const path = require("path");
 
-const argBuilder = yargs(hideBin(process.argv)).scriptName("svs").usage("$0 <cmd> [args]");
-
-const convertPemToLocal = pem => {
-  const _publicKey = Certificate.fromPEM(pem);
-
-  const publicKey = {
-    subject: {
-      countryName: _publicKey.subject.countryName,
-      commonName: _publicKey.subject.commonName,
-    },
-    validFrom: _publicKey.validFrom,
-    validTo: _publicKey.validTo,
-    raw: Buffer.from(_publicKey.raw).toString("base64"),
-    publicKey: {
-      keyRaw: Buffer.from(_publicKey.publicKey.keyRaw).toString("base64"),
-    },
-  };
-
-  return publicKey;
-};
+const argBuilder = yargs(hideBin(process.argv))
+  .scriptName("svs")
+  .usage("$0 <cmd> [args]")
+  .demandCommand();
 
 argBuilder.command({
   command: "x509-to-json <pubkey>",
@@ -83,4 +67,6 @@ argBuilder.command({
   },
 });
 
-argBuilder.epilogue("Please see https://github.com/HISPVietnam/sign-verify-service for more info").parse();
+argBuilder
+  .epilogue("Please see https://github.com/HISPVietnam/sign-verify-service for more info")
+  .parse();
