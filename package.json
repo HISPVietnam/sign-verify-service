@@ -18,7 +18,8 @@
     "docker:runs": "docker run --name svs-http-api-sign -it -p 3000:3000 --rm svs-http-api-sign",
     "docker:buildv": "docker build -f Dockerfile.verify . -t svs-http-api-verify",
     "docker:runv": "docker run --name svs-http-api-verify -it -p 3000:3000 --rm svs-http-api-verify",
-    "format": "npx prettier -w ."
+    "format": "npx prettier -w .",
+    "cli": "node packages/svs-cli/lib/index.js"
   },
   "engines": {
     "node": ">=14.0.0"
