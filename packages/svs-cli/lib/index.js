@@ -36,7 +36,7 @@ const argBuilder = yargs(hideBin(process.argv))
   .usage("$0 <cmd> [args]")
   .demandCommand();
 
-argBuilder.command(require("./x509-to-json"));
+argBuilder.command(require("./cmds/x509-to-json"));
 
 argBuilder
   .epilogue("Please see https://github.com/HISPVietnam/sign-verify-service for more info")
