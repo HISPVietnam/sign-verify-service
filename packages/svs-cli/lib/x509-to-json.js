@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
  * Copyright (c) 2021, HISP Vietnam, Co.Ltd
  * All rights reserved.
@@ -28,19 +26,36 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const yargs = require("yargs/yargs");
-const { hideBin } = require("yargs/helpers");
 const { Certificate } = require("@fidm/x509");
 const fs = require("fs");
 const path = require("path");
 
-const argBuilder = yargs(hideBin(process.argv))
-  .scriptName("svs")
-  .usage("$0 <cmd> [args]")
-  .demandCommand();
+const handler = argv => {
+  const _publicKey = Certificate.fromPEM(fs.readFileSync(path.resolve(argv.pubkey)));
 
-argBuilder.command(require("./x509-to-json"));
+  const publicKey = {
+    issuer: {
+      countryName: _publicKey.issuer.countryName,
+      commonName: _publicKey.issuer.commonName,
+    },
+    subject: {
+      countryName: _publicKey.subject.countryName,
+      commonName: _publicKey.subject.commonName,
+    },
+    validFrom: _publicKey.validFrom,
+    validTo: _publicKey.validTo,
+    isCA: _publicKey.isCA,
+    raw: Buffer.from(_publicKey.raw).toString("base64"),
+    publicKey: {
+      keyRaw: Buffer.from(_publicKey.publicKey.keyRaw).toString("base64"),
+    },
+  };
 
-argBuilder
-  .epilogue("Please see https://github.com/HISPVietnam/sign-verify-service for more info")
-  .parse();
+  console.log(JSON.stringify(publicKey, null, 2));
+};
+
+module.exports = {
+  command: "x509-to-json <pubkey>",
+  desc: "Creates JSON from a X.509 Certificate.",
+  handler,
+};
