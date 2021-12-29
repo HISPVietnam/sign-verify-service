@@ -7,3 +7,4 @@
 - [x] Add back Docker support
 - [x] Update to use YAML for configuration
 - [x] Split out separate packages for http-api-sign (including http client) and http-api-verify
+- [ ] Use CSCA pubkey to validate dsc/masterlist
