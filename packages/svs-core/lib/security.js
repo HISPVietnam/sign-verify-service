@@ -112,9 +112,7 @@ const coseVerification = (data, publicKey, publicKeys) => {
           countryName: publicKey.subject.getField("C").value,
         },
       };
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   }
 };
 
