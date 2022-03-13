@@ -100,7 +100,15 @@ const coseVerification = (data, publicKey) => {
 
   const verifier = { key: { x: keyX, y: keyY, kid: createFingerprint(publicKey) } };
 
-  return cose.sign.verify(data, verifier).then(buf => cbor.decode(buf));
+  return cose.sign.verify(data, verifier).then(buf => {
+    return {
+      buffer: cbor.decode(buf),
+      certificateIssuer: {
+        commonName: publicKey.subject.getField("CN").value,
+        countryName: publicKey.subject.getField("C").value,
+      },
+    };
+  });
 };
 
 const createFingerprint = publicKey => {
@@ -126,12 +134,6 @@ const createSecurity = cfg => {
 
   if (cfg.verification.enabled) {
     o.verification = data => coseVerification(data, publicKey);
-    o.fingerprint = () => createFingerprint(publicKey);
-
-    cfg.certificateIssuer = {
-      commonName: publicKey.subject.getField("CN").value,
-      countryName: publicKey.subject.getField("C").value,
-    };
   }
 
   if (cfg.signature.enabled) {
