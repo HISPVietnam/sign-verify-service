@@ -46,7 +46,7 @@ const defaultConfig = {
     filename: "svs.log",
   },
   schema: undefined,
-  keys: { public: undefined, private: undefined },
+  keys: { public: undefined, private: undefined, publicList: undefined },
   signature: {
     enabled: true,
     path: "/sign",
@@ -86,6 +86,10 @@ const parse = (cp, cfg) => {
 
   if (cfg.keys.public) {
     cfg.keys.public = loadFile(path.resolve(cp, cfg.keys.public));
+  }
+
+  if (cfg.keys.publicList) {
+    cfg.keys.publicList = loadFile(path.resolve(cp, cfg.keys.publicList));
   }
 
   if (cfg.signature.enabled && cfg.keys.private) {

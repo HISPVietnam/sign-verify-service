@@ -79,7 +79,7 @@ const coseSignature = async (data, publicKey, privateKey) => {
   });
 };
 
-const coseVerification = (data, publicKey) => {
+const coseVerification = (data, publicKey, publicKeys) => {
   if (data.startsWith("HC1")) {
     data = data.substring(3);
     if (data.startsWith(":")) {
@@ -94,21 +94,28 @@ const coseVerification = (data, publicKey) => {
   data = base45.decode(data);
   data = zlib.inflateSync(data);
 
-  const publicKeyRaw = publicKey.publicKey.keyRaw;
-  const keyX = Buffer.from(publicKeyRaw.slice(1, 1 + 32));
-  const keyY = Buffer.from(publicKeyRaw.slice(33, 33 + 32));
+  for (let pk in publicKeys) {
+    const key = publicKeys[pk];
+    const publicKeyRaw = key.publicKey.keyRaw;
+    const keyX = Buffer.from(publicKeyRaw.slice(1, 1 + 32));
+    const keyY = Buffer.from(publicKeyRaw.slice(33, 33 + 32));
 
-  const verifier = { key: { x: keyX, y: keyY, kid: createFingerprint(publicKey) } };
+    const verifier = { key: { x: keyX, y: keyY, kid: createFingerprint(key) } };
 
-  return cose.sign.verify(data, verifier).then(buf => {
-    return {
-      buffer: cbor.decode(buf),
-      certificateIssuer: {
-        commonName: publicKey.subject.getField("CN").value,
-        countryName: publicKey.subject.getField("C").value,
-      },
-    };
-  });
+    try {
+      const buf = cose.sign.verifySync(data, verifier);
+
+      return {
+        buffer: cbor.decode(buf),
+        certificateIssuer: {
+          commonName: publicKey.subject.getField("CN").value,
+          countryName: publicKey.subject.getField("C").value,
+        },
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  }
 };
 
 const createFingerprint = publicKey => {
@@ -118,6 +125,11 @@ const createFingerprint = publicKey => {
 
 const createSecurity = cfg => {
   const publicKey = Certificate.fromPEM(cfg.keys.public);
+
+  const publicKeys = {
+    [createFingerprint(publicKey)]: publicKey,
+  }; // verification list
+
   const privateKey = PrivateKey.fromPEM(cfg.keys.private);
 
   const auths = cfg.http.auth.map(p => {
@@ -132,8 +144,16 @@ const createSecurity = cfg => {
     authenticate: (request, username, password) => authenticate(auths, request, username, password),
   };
 
+  if (cfg.keys.publicList) {
+    const keys = Certificate.fromPEMs(cfg.keys.publicList);
+
+    for (let key of keys) {
+      publicKeys[createFingerprint(key)] = key;
+    }
+  }
+
   if (cfg.verification.enabled) {
-    o.verification = data => coseVerification(data, publicKey);
+    o.verification = data => coseVerification(data, publicKey, publicKeys);
   }
 
   if (cfg.signature.enabled) {
