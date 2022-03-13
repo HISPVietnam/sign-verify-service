@@ -108,8 +108,8 @@ const coseVerification = (data, publicKey, publicKeys) => {
       return {
         buffer: cbor.decode(buf),
         certificateIssuer: {
-          commonName: publicKey.subject.getField("CN").value,
-          countryName: publicKey.subject.getField("C").value,
+          commonName: key.subject.getField("CN").value,
+          countryName: key.subject.getField("C").value,
         },
       };
     } catch (err) {}
@@ -127,8 +127,6 @@ const createSecurity = cfg => {
   const publicKeys = {
     [createFingerprint(publicKey)]: publicKey,
   }; // verification list
-
-  const privateKey = PrivateKey.fromPEM(cfg.keys.private);
 
   const auths = cfg.http.auth.map(p => {
     return {
@@ -155,6 +153,7 @@ const createSecurity = cfg => {
   }
 
   if (cfg.signature.enabled) {
+    const privateKey = PrivateKey.fromPEM(cfg.keys.private);
     o.signature = data => coseSignature(data, publicKey, privateKey);
   }
 
