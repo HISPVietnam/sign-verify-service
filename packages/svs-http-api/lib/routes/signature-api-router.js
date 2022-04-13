@@ -68,7 +68,7 @@ internals.handler = async (request, h) => {
     };
   }
 
-  const buffer = await signature(JSON.stringify(request.payload));
+  const buffer = await signature(request.payload);
 
   const image = await QRCode.toBuffer(buffer.toString("hex"), {
     version: qrCode.version,

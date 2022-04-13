@@ -59,7 +59,13 @@ internals.handler = async (request, h) => {
 
   try {
     const { buffer, certificateIssuer } = await verification(request.payload);
-    const data = JSON.parse(buffer.toString("utf-8"));
+    let data;
+
+    if(typeof buffer === 'string') {
+      data = JSON.parse(buffer.toString("utf-8"));
+    } else {
+      data = buffer;
+    }
 
     const isValid = validator(data);
 
